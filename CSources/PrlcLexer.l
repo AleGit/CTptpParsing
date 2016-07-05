@@ -8,8 +8,8 @@
     //  Copyright (c) 2015 Alexander Maringele. All rights reserved.
     //
 
-#import "PrlcParser.h"
-#import "PrlcMacros.h"
+#import "CSources/PrlcParser.h"
+#import "CSources/PrlcMacros.h"
 #import "PrlcParser.tab.h"
 
 #define TOKEN(k)    { return k; }

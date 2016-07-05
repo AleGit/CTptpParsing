@@ -9,12 +9,7 @@
 #ifndef prlc_h
 #define prlc_h
 
-#if(macos)
-#import <CoreFoundation/CoreFoundation.h>
-#endif
-#if(linux)
 #import "core.h"
-#endif
 
 typedef enum {
     PRLC_UNDEFINED = 0,

@@ -10,8 +10,8 @@
 %{
 /* *** C DECLARATIONS *************************************************************************** */
     
-#import "PrlcMacros.h"
-#import "PrlcParser.h"
+#import "CSources/PrlcMacros.h"
+#import "CSources/PrlcParser.h"
     
 %}
 /*** YACC/BISON DECLARATIONS ***/

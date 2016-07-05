@@ -12,13 +12,13 @@ LOCALINCLUDE = /usr/local/include
 #	cp $(SHAREDINC).h  $(LOCALINCLUDE)	
 
 check: check.c parser
-	clang $(SRCDIR)/prlc.c check.c -o check.out
+	clang $(SRCDIR)/*.c *.c -o check.out
 	./check.out
 
 parser: $(SRCDIR)/PrlcParser.y $(SRCDIR)/PrlcLexer.l
 #   bison -d -Dapi.prefix={prlc_} $(SRCDIR)/PrlcParser.y
-#	bison -d  $(SRCDIR)/PrlcParser.y
-#	flex $(SRCDIR)/PrlcLexer.l
+	bison -d  $(SRCDIR)/PrlcParser.y
+	flex $(SRCDIR)/PrlcLexer.l
 
 clean: deinstall
 	rm -f *.o *.out *.output *.tab.* *~ $(SRCDIR)/*.*~
