@@ -31,11 +31,11 @@ void check_parse_puz001() {
 
 	const char* name = prlcFirstSymbol (store);
 	while (name != NULL) {
-		printf("  %s\n ", name);
+		printf("»%s« ", name);
 		name = prlcNextSymbol (store,name);
 	}
 	
-	printf("\n");
+	printf("¤\n");
 
 	print_store_infos (store);
 
