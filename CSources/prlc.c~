@@ -57,7 +57,7 @@ prlc_store* prlcCreateStore(size_t fileSize) {
     fileSize = mymax(fileSize, 1024);
 
 	//	    hwv134   276455091
-	size_t maxSize = 12000000000;
+	size_t maxSize = 13900000000;
 
 	size_t sSize = mymin(fileSize, maxSize / sizeof(char));
 	size_t pSize = mymin(fileSize, maxSize / sizeof(prlc_prefix_node));
