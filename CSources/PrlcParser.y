@@ -16,6 +16,8 @@
 %}
 /*** YACC/BISON DECLARATIONS ***/
 
+%define api.prefix {prlc_}
+
 %union
 {
     const char* cstring;        // basic to

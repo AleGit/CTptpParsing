@@ -16,8 +16,13 @@ check: check.c parser
 	./check.out
 
 parser: $(SRCDIR)/PrlcParser.y $(SRCDIR)/PrlcLexer.l
-	#bison -d -Dapi.prefix={prlc_} $(SRCDIR)/PrlcParser.y
-	#flex $(SRCDIR)/PrlcLexer.l
+#   bison -d -Dapi.prefix={prlc_} $(SRCDIR)/PrlcParser.y
+#	bison -d  $(SRCDIR)/PrlcParser.y
+#	flex $(SRCDIR)/PrlcLexer.l
 
-clean:
-	rm -f *.o *.out *.output *.tab.* $(SHAREDLIB).so $(LOCALLIBPATH)/$(SHAREDLIB).so $(LOCALINCLUDE)/$(SHAREDINC).h
+clean: deinstall
+	rm -f *.o *.out *.output *.tab.* *~ $(SRCDIR)/*.*~
+
+deinstall:
+	rm -f $(SHAREDLIB).so $(LOCALLIBPATH)/$(SHAREDLIB).so $(LOCALINCLUDE)/$(SHAREDINC).h
+
