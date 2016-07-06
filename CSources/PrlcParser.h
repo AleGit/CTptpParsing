@@ -29,7 +29,4 @@ int prlc_error (const char * _Nullable s);
 extern prlc_store* _Nullable prlcParsingStore;
 extern prlc_tree_node* _Nullable prlcParsingRoot;
 
-int prlc_parse_path (const char* file_path);
-int file_size(FILE *file);
-
 #endif /* MereParser_h */

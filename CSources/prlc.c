@@ -1,22 +1,19 @@
-//
-//  prlc.c
-//  NyTerms
-//
-//  Created by Alexander Maringele on 04.05.16.
 //  Copyright © 2016 Alexander Maringele. All rights reserved.
-//
 
 #include "prlc.h"
 
-// const char* const prlcStoreSymbol(prlc_store* store, const char* const symbol);
+#define prlc_min(a,b) ((a < b) ? a : b)
+#define prlc_max(a,b) ((a > b) ? a : b)
 
 #pragma mark - allocate and free store
 
-void prlc_alloc_memory(prlc_memory* memory, size_t capacity, size_t unit) {
-    memory->memory = calloc(capacity,unit);
-    memory->capacity = capacity;
-    memory->unit = unit;
-    memory->size = 0;
+/// Alloc memory block with capacity*unit bytes.
+/// The shelf can hold 'capacity' entries of size 'unit'.
+void prlc_alloc_memory(prlc_shelf* shelf, size_t capacity, size_t unit) {
+    shelf->memory = calloc(capacity,unit);
+    shelf->capacity = capacity;
+    shelf->unit = unit;
+    shelf->size = 0;
 }
 
 void prlc_copy_predefined_symbols(prlc_store *store) {
@@ -47,21 +44,18 @@ void prlc_copy_predefined_symbols(prlc_store *store) {
     
 }
 
-#define mymin(a,b) ((a < b) ? a : b)
-#define mymax(a,b) ((a > b) ? a : b)
-
 prlc_store* prlcCreateStore(size_t fileSize) {
     prlc_store* store = calloc(1,sizeof(prlc_store));
 
 	
-    fileSize = mymax(fileSize, 1024);
+    fileSize = prlc_max(fileSize, 1024);
 
 	//	    hwv134   276455091
 	size_t maxSize = 12000000000;
 
-	size_t sSize = mymin(fileSize, maxSize / sizeof(char));
-	size_t pSize = mymin(fileSize, maxSize / sizeof(prlc_prefix_node));
-	size_t tSize = mymin(fileSize, maxSize / sizeof(prlc_tree_node));
+	size_t sSize = prlc_min(fileSize, 1 + maxSize / sizeof(char));
+	size_t pSize = prlc_min(fileSize, 1 + maxSize / sizeof(prlc_prefix_node));
+	size_t tSize = prlc_min(fileSize, 1 + maxSize / sizeof(prlc_tree_node));
 
     prlc_alloc_memory(&(store->symbols), sSize, sizeof(char));
     prlc_alloc_memory(&(store->p_nodes), pSize, sizeof(prlc_prefix_node));

@@ -49,29 +49,37 @@ typedef struct prlc_prefix_node {
 } prlc_prefix_node;
 
 
-
+/// A shelf holds 'size' (up to 'capacity') entries of size 'unit' in 'memory'.
+/// 'memory' is a pointer to a block of 'capacity*size' bytes.
 typedef struct {
     void *memory;
     size_t capacity;
     size_t unit;
     size_t size;
-} prlc_memory;
+} prlc_shelf;
 
+/// A store encapsulates three shelves:
+/// - symbols (char)
+/// - p_nodes (prlc_prefix_node)
+/// - t_nodes (prlc_tree_node)
 typedef struct {
-    prlc_memory symbols;
-    prlc_memory p_nodes;
-    prlc_memory t_nodes;
+    prlc_shelf symbols;
+    prlc_shelf p_nodes;
+    prlc_shelf t_nodes;
 } prlc_store;
 
 typedef prlc_store* PrlcStoreRef;
+typedef prlc_shelf* PrlcShelfRef;
+typedef prlc_prefix_node* PrlcPrefixNodeRef;
 typedef prlc_tree_node* PrlcTreeNodeRef;
-typedef char* PrlcStringRef;
+// typedef char* PrlcStringRef;
 
 #pragma mark - memory
-prlc_store* prlcCreateStore(size_t);
-void prlcDestroyStore(prlc_store**);
 
-prlc_tree_node* treeNode(prlc_store* store, size_t index);
+PrlcStoreRef prlcCreateStore(size_t);
+void prlcDestroyStore(PrlcStoreRef*);
+
+prlc_tree_node* treeNode(PrlcStoreRef, size_t index);
 
 #pragma mark - store
 

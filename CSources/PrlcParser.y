@@ -171,11 +171,11 @@ annotated_formula   :   fof_annotated
  tff_annotated       :   TFF '(' name ',' formula_role ',' tff_formula annotations ')' '.'
  */
 fof_annotated       :   FOF '(' name ',' formula_role ',' fof_formula annotations ')' '.' {
-    $$=CREATE_FOF($3, $5, $7, $8);
+    $$=CREATE_FOF($3, $5, $7, $8); 
 }
 
 cnf_annotated       :   CNF '(' name ',' formula_role ',' cnf_formula annotations ')' '.' {
-    $$=CREATE_CNF($3, $5, $7, $8);
+    $$=CREATE_CNF($3, $5, $7, $8); 
 }
 
 annotations         :   /* epsilon */   { $$ = NULLREF; }

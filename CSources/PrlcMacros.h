@@ -9,14 +9,32 @@
 
 #define NULLREF                     0
 
+/* ********************************************* */
+// #define INFO_PRINT
+#ifdef INFO_PRINT
+
+#define INFO_CNF(a) ; printf("cnf('%s')\n",a)
+#define INFO_FOF(a) ; printf("fof('%s')\n",a)
+#define INFO_INCLUDE(a) ; printf("include('%s')\n",a)
+
+#else
+
+#define INFO_CNF(a) 
+#define INFO_FOF(a) 
+#define INFO_INCLUDE(a) 
+
+#endif
+
+/* ********************************************* */
+
 #define DID_PARSE_FORMULA(a)        return 0
 #define DID_PARSE_INCLUDE(a)        return 0
 
 // #define CREATE_ANNOTATED(a, b, c, d, e)                 prlcLabel("annotated")
 
-#define CREATE_FOF(name, role, root, annotations)       prlcStoreNodeAnnotated(PS, PRLC_FOF, name, role, root, annotations)
-#define CREATE_CNF(name, role, root, annotations)       prlcStoreNodeAnnotated(PS, PRLC_CNF, name, role, root, annotations)
-#define CREATE_INCLUDE(fileName, nameList)              prlcStoreNodeInclude(PS, fileName, nameList)
+#define CREATE_FOF(name, role, root, annotations)       prlcStoreNodeAnnotated(PS, PRLC_FOF, name, role, root, annotations) INFO_FOF(name)
+#define CREATE_CNF(name, role, root, annotations)       prlcStoreNodeAnnotated(PS, PRLC_CNF, name, role, root, annotations) INFO_CNF(name)
+#define CREATE_INCLUDE(fileName, nameList)              prlcStoreNodeInclude(PS, fileName, nameList) INFO_INCLUDE(fileName)
 
 #define TPTP_INPUT(input)                               input; prlcNodeAppendChild(PR, input)
 #define TPTP_INPUT_APPEND(sequence, input)              prlcNodeAppendNode(sequence, input)
