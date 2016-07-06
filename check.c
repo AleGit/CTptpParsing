@@ -126,7 +126,7 @@ void print_store_infos(PrlcStoreRef store) {
 	print_shelf_info("symbols", store->symbols);
 	print_shelf_info("prefix nodes", store->p_nodes);
 	print_shelf_info("tree nodes", store->t_nodes);
-}
+}   
 
 // total size of file in bytes
 int file_size(FILE *file) {

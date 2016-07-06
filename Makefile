@@ -1,6 +1,6 @@
 SRCDIR = CSources
 SHAREDINC = FleaTptpParsing
-SHAREDLIB = libFleaTptpParsing
+SHAREDLIB = libFleaTptpParsing.so
 
 # same paths as libyices
 LOCALLIBPATH = /usr/local/lib
@@ -23,6 +23,9 @@ parser: $(SRCDIR)/PrlcParser.y $(SRCDIR)/PrlcLexer.l
 clean: deinstall
 	rm -f *.o *.out *.output *.tab.* *~ $(SRCDIR)/*.*~
 
+install: deinstall parser
+	clang -shared -v demo.c -o $(SHAREDLIB)
+
 deinstall:
-	rm -f $(SHAREDLIB).so $(LOCALLIBPATH)/$(SHAREDLIB).so $(LOCALINCLUDE)/$(SHAREDINC).h
+	rm -f $(SHAREDLIB) $(LOCALLIBPATH)/$(SHAREDLIB) $(LOCALINCLUDE)/$(SHAREDINC).h
 
