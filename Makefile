@@ -24,8 +24,12 @@ clean: deinstall
 	rm -f *.o *.out *.output *.tab.* *~ $(SRCDIR)/*.*~
 
 install: deinstall parser
-	clang -shared -v demo.c -o $(SHAREDLIB)
+#	clang -shared -v demo.c -o demo.so
+	clang -o $(SHAREDLIB) -fPIC -shared -v PrlcParser.tab.c lex.prlc_.c $(SRCDIR)/*.c 
+# cp $(SHAREDLIB) $(LOCALLIBPATH)/$(SHAREDLIB)
+	clang -o checkL.out -lFleaTptpParsing check.c
+	./checkL.out
 
 deinstall:
-	rm -f $(SHAREDLIB) $(LOCALLIBPATH)/$(SHAREDLIB) $(LOCALINCLUDE)/$(SHAREDINC).h
+# rm -f $(SHAREDLIB) $(LOCALLIBPATH)/$(SHAREDLIB) $(LOCALINCLUDE)/$(SHAREDINC).h
 
