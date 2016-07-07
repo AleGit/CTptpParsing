@@ -1,7 +1,3 @@
-#if(!Linux)
-#import <CoreFoundation/CoreFoundation.h>
-#endif
-
 #if(linux)
 
 /* _Nullable from CoreFoundation */
@@ -32,5 +28,11 @@
 
 #endif
 
+/* _Nullable from CoreFoundation */
+#define _Nullable
+
+#else /* macOS */
+
+#import <CoreFoundation/CoreFoundation.h>
 
 #endif

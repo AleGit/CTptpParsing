@@ -9,12 +9,13 @@
 #pragma mark - PrlcLexer.l
 
 extern int prlc_lineno;
-// extern unsigned long prlc_leng;
-#if(Linux)
+
+#if(linux)
 extern int prlc_leng;
 #else
 extern unsigned long prlc_leng;
 #endif
+
 extern char * _Nullable prlc_text;
 extern FILE * _Nullable prlc_in;
 
