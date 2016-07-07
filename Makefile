@@ -12,10 +12,10 @@ endif
 
 check: check.c install
 	clang -o check$(SONAME) -l$(SONAME) check.c
-	./check$(SONAME)
+	./check$(SONAME) PUZ001-1.p 100
 
 install: parser
-	clang -o $(SOFILE) -fPIC -shared -v PrlcParser.tab.c lex.prlc_.c $(SRCDIR)/*.c 
+	clang -o $(SOFILE) -fPIC -shared -v PrlcParser.tab.c lex.prlc_.c $(SRCDIR)/*.c
 	cp $(SOFILE) $(SOPATH)/$(SOFILE)
 
 parser: $(SRCDIR)/PrlcParser.y $(SRCDIR)/PrlcLexer.l
@@ -29,4 +29,3 @@ clean: deinstall
 
 deinstall:
 	rm -f $(SOPATH)/$(SOFILE)
-
