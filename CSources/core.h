@@ -1,4 +1,4 @@
-#if(macos)
+#if(!Linux)
 #import <CoreFoundation/CoreFoundation.h>
 #endif
 
