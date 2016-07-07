@@ -34,4 +34,4 @@ int prlc_error (const char * _Nullable s);
 extern prlc_store* _Nullable prlcParsingStore;
 extern prlc_tree_node* _Nullable prlcParsingRoot;
 
-#endif /* MereParser_h */
+#endif /* PrlcParser_h */

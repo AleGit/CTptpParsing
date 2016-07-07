@@ -1,8 +1,5 @@
 #if(linux)
 
-/* _Nullable from CoreFoundation */
-#define _Nullable
-
 #include <sys/types.h>
 #include <stdarg.h>
 #include <assert.h>
