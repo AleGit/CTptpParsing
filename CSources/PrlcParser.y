@@ -16,7 +16,11 @@
 %}
 /*** YACC/BISON DECLARATIONS ***/
 
+/* 
 %define api.prefix {prlc_}
+	* does not work on all platforms, e.g. macOS
+	* flag '-p prlc_' is used instead
+*/
 
 %union
 {

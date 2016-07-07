@@ -2,12 +2,12 @@
 #include <stdio.h>
 #include "CSources/PrlcParser.h"
 
-int prlc_parse_path (const char* file_path);
-int file_size(FILE *file);
+int prlc_parse_path (const char*);
+int file_size(FILE*);
 
-void print_shelf_info(const char* name, const prlc_shelf memory);
-void print_store_infos(PrlcStoreRef store);
-void print_store_symbols(PrlcStoreRef store);
+void print_shelf_info(const char*, const prlc_shelf);
+void print_store_infos(PrlcStoreRef);
+void print_store_symbols(PrlcStoreRef, PrlcTreeNodeRef);
 
 void check_memory();
 void check_string_store();
@@ -39,13 +39,13 @@ void check_memory() {
 	}
 }
 
-void print_store_symbols(PrlcStoreRef store) {
+void print_store_symbols(PrlcStoreRef store, PrlcTreeNodeRef root) {
 	size_t len = 0; 
 	const char* name = prlcFirstSymbol (store);
 	while (name != NULL) {
 		len += strlen(name) + 3;
 
-		if (len > 99) {
+		if (len > 99 || name == root->symbol) {
 			printf("\n");
 			len = strlen(name) + 3;
 		}
@@ -73,7 +73,7 @@ void check_parse_file(const char *path) {
 	
 	
 	print_store_infos (store);
-	print_store_symbols (store);
+	print_store_symbols (store, root);
 
 
 	prlcDestroyStore(&store);

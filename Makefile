@@ -21,7 +21,7 @@ check: check.c parser
 
 parser: $(SRCDIR)/PrlcParser.y $(SRCDIR)/PrlcLexer.l
 #   bison -d -Dapi.prefix={prlc_} $(SRCDIR)/PrlcParser.y
-	bison -d  $(SRCDIR)/PrlcParser.y
+	bison -d -p prlc_ $(SRCDIR)/PrlcParser.y
 	flex $(SRCDIR)/PrlcLexer.l
 
 clean: deinstall
