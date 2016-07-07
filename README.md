@@ -1,5 +1,5 @@
 # C Tptp Parsing
-Simple low level library for TPTP problem file parsing.
+Simple low level shared library for TPTP problem file parsing.
 - `Makefile` for Linux and macOS.
 - `sudo make install` builds and installs `libTptpParsing`.
 - `sudo make check` builds and runs `checkTptpParsing`:
