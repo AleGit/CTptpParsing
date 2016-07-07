@@ -1,10 +1,14 @@
 SRCDIR = CSources
-SHAREDINC = FleaTptpParsing
-SHAREDLIB = libFleaTptpParsing.so
+SONAME = TptpParsing
+SOFILE = lib$(SONAME).so
 
-# same paths as libyices
-LOCALLIBPATH = /usr/local/lib
-LOCALINCLUDE = /usr/local/include
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	SOPATH = /usr/lib
+endif
+ifeq ($(UNAME_S),Darwin)
+	SOPATH = /usr/local/lib
+endif
 
 # FleaTptpParsing: $(SRCDIR)/prlc.c
 #	clang -shared $(SRCDIR)/prlc.c -o $(LOCALLIBPATH)
@@ -12,8 +16,8 @@ LOCALINCLUDE = /usr/local/include
 #	cp $(SHAREDINC).h  $(LOCALINCLUDE)	
 
 check: check.c parser
-	clang $(SRCDIR)/*.c *.c -o check.out
-	./check.out
+	clang -o check$(SONAME).out -l$(SONAME) check.c
+	./check$(SONAME).out
 
 parser: $(SRCDIR)/PrlcParser.y $(SRCDIR)/PrlcLexer.l
 #   bison -d -Dapi.prefix={prlc_} $(SRCDIR)/PrlcParser.y
@@ -22,14 +26,14 @@ parser: $(SRCDIR)/PrlcParser.y $(SRCDIR)/PrlcLexer.l
 
 clean: deinstall
 	rm -f *.o *.out *.output *.tab.* *~ $(SRCDIR)/*.*~
+	rm -f $(SOFILE)
+
 
 install: deinstall parser
-#	clang -shared -v demo.c -o demo.so
-	clang -o $(SHAREDLIB) -fPIC -shared -v PrlcParser.tab.c lex.prlc_.c $(SRCDIR)/*.c 
-# cp $(SHAREDLIB) $(LOCALLIBPATH)/$(SHAREDLIB)
-	clang -o checkL.out -lFleaTptpParsing check.c
-	./checkL.out
+	clang -o $(SOFILE) -fPIC -shared -v PrlcParser.tab.c lex.prlc_.c $(SRCDIR)/*.c 
+	cp $(SOFILE) $(SOPATH)/$(SOFILE)
+
 
 deinstall:
-# rm -f $(SHAREDLIB) $(LOCALLIBPATH)/$(SHAREDLIB) $(LOCALINCLUDE)/$(SHAREDINC).h
+	rm -f $(SOPATH)/$(SOFILE)
 

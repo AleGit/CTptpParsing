@@ -13,28 +13,12 @@ void check_memory();
 void check_string_store();
 void check_parse_file(const char *);
 
-const char* puz001="/home/amaringele/Downloads/TPTP/Problems/PUZ/PUZ001-1.p";
-const char* hwv107 = "/home/amaringele/Downloads/TPTP/Problems/HWV/HWV107-1.p";
-const char* hwv134 = "/home/amaringele/Downloads/TPTP/Problems/HWV/HWV134-1.p";
+const char* puz001="PUZ001-1.p";
 
 int main()
 {
 
-	// check_string_store ();
-
-	check_parse_file (hwv107);
-
-	// check_memory ();
-
-/*	FILE *file = fopen(hwv134,"r");
-
-	
-
-	int size = file_size(file);
-
-	printf("%d, %s\n", size, hwv134);
-	
-	fclose(file);*/
+	check_parse_file (puz001);
 	
 	return (0);
 }
@@ -55,6 +39,26 @@ void check_memory() {
 	}
 }
 
+void print_store_symbols(PrlcStoreRef store) {
+	size_t len = 0; 
+	const char* name = prlcFirstSymbol (store);
+	while (name != NULL) {
+		len += strlen(name) + 3;
+
+		if (len > 99) {
+			printf("\n");
+			len = strlen(name) + 3;
+		}
+		
+		printf("»%s« ", name);
+		
+		name = prlcNextSymbol (store, name);
+	}
+	
+	printf("¤\n");
+}
+
+
 void check_parse_file(const char *path) {
 	printf("%s\n",path);
 
@@ -66,17 +70,10 @@ void check_parse_file(const char *path) {
 	prlcParsingStore = NULL;
 	prlcParsingRoot = NULL;
 
-	int i = 0; 
-	const char* name = prlcFirstSymbol (store);
-	while (name != NULL && i < 23) {
-		printf("»%s« ", name);
-		name = prlcNextSymbol (store, name);
-		i++;
-	}
 	
-	printf("¤\n");
 	
 	print_store_infos (store);
+	print_store_symbols (store);
 
 
 	prlcDestroyStore(&store);
@@ -117,9 +114,7 @@ void check_string_store() {
 void print_shelf_info(const char* name, const prlc_shelf shelf) {
 	int promille = (1000 * shelf.size) / shelf.capacity + 5;
 	
-
-	
-	printf("%s: %lu.%lu.%lu (%d %%)\n", name, shelf.size, shelf.unit, shelf.capacity, promille/10);
+	printf("%s: %lu.%lu.%lu (%d %% of %lu bytes)\n", name, shelf.size, shelf.unit, shelf.capacity, promille/10, shelf.capacity*shelf.unit);
 }
 
 void print_store_infos(PrlcStoreRef store) {
