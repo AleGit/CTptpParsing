@@ -1,0 +1,5 @@
+module CTptpParsing [system] {
+    header "CSources/PrlcParser.h"
+    link "TptpParsing"
+    export *
+}
