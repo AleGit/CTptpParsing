@@ -1,15 +1,14 @@
 SRCDIR = CSources
 SONAME = TptpParsing
 SOFILE = lib$(SONAME).so
+INCLUDES = /usr/local/include
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
 	SOPATH = /usr/lib
-	INCLUDES = /usr/include
 endif
 ifeq ($(UNAME_S),Darwin)
 	SOPATH = /usr/local/lib
-	INCLUDES = /usr/local/include
 endif
 
 check: check.c install

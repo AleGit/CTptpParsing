@@ -1,15 +1,10 @@
-//
-//  prlc.h
-//  NyTerms
-//
-//  Created by Alexander Maringele on 04.05.16.
+//  PrlcData.h
 //  Copyright © 2016 Alexander Maringele. All rights reserved.
-//
 
-#ifndef prlc_h
-#define prlc_h
+#ifndef PrlcData_h
+#define PrlcData_h
 
-#import "PrlcCore.h"
+#include "PrlcCore.h"
 
 typedef enum {
     PRLC_UNDEFINED = 0,
@@ -121,4 +116,4 @@ PrlcTreeNodeRef prlcTreeNodeAtIndex(prlc_store*, size_t);
 
 
 
-#endif /* prlc_h */
+#endif /* PrlcData_h */

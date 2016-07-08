@@ -1,10 +1,10 @@
-//  Created by Alexander Maringele on 14.03.16.
+//  PrlcParser.h
 //  Copyright © 2016 Alexander Maringele. All rights reserved.
 
 #ifndef PrlcParser_h
 #define PrlcParser_h
 
-#import "PrlcData.h"
+#include "PrlcData.h"
 
 #pragma mark - PrlcLexer.l
 

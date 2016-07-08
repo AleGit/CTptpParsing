@@ -1,4 +1,4 @@
-//  Created by Alexander Maringele .
+//  PrlcMacros.h
 //  Copyright © 2015 Alexander Maringele. All rights reserved.
 
 #ifndef PrlcMacros_h
@@ -87,4 +87,4 @@
 
 
 
-#endif
+#endif /* PrlcMacros_h */

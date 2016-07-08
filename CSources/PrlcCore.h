@@ -1,3 +1,9 @@
+//  PrlcCore.h
+//  Copyright © 2016 Alexander Maringele. All rights reserved.
+
+#ifndef PrlcCore_h
+#define PrlcCore_h
+
 #if(linux)
 
 #include <sys/types.h>
@@ -28,8 +34,10 @@
 /* _Nullable from CoreFoundation */
 #define _Nullable
 
-#else /* macOS */
+#else /* linux, macOS */
 
 #import <CoreFoundation/CoreFoundation.h>
 
-#endif
+#endif /* macOS */
+
+#endif /* PrlcCore_h */
