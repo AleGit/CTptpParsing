@@ -4,7 +4,7 @@
 #ifndef PrlcParser_h
 #define PrlcParser_h
 
-#import "prlc.h"
+#import "PrlcData.h"
 
 #pragma mark - PrlcLexer.l
 

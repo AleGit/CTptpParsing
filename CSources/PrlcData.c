@@ -1,6 +1,6 @@
 //  Copyright © 2016 Alexander Maringele. All rights reserved.
 
-#include "prlc.h"
+#include "PrlcData.h"
 
 #define prlc_min(a,b) ((a < b) ? a : b)
 #define prlc_max(a,b) ((a > b) ? a : b)

@@ -9,7 +9,7 @@
 #ifndef prlc_h
 #define prlc_h
 
-#import "core.h"
+#import "PrlcCore.h"
 
 typedef enum {
     PRLC_UNDEFINED = 0,

@@ -17,6 +17,7 @@ check: check.c install
 install: parser
 	clang -o $(SOFILE) -fPIC -shared -v PrlcParser.tab.c lex.prlc_.c $(SRCDIR)/*.c
 	cp $(SOFILE) $(SOPATH)/$(SOFILE)
+	cp CSources/Prlc*.h /usr/local/include/
 
 parser: $(SRCDIR)/PrlcParser.y $(SRCDIR)/PrlcLexer.l
 #   bison -d -Dapi.prefix={prlc_} $(SRCDIR)/PrlcParser.y
@@ -29,3 +30,4 @@ clean: deinstall
 
 deinstall:
 	rm -f $(SOPATH)/$(SOFILE)
+	rm -f /usr/local/incldue/prlc
