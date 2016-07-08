@@ -5,9 +5,11 @@ SOFILE = lib$(SONAME).so
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
 	SOPATH = /usr/lib
+	INCLUDES = /usr/include
 endif
 ifeq ($(UNAME_S),Darwin)
 	SOPATH = /usr/local/lib
+	INCLUDES = /usr/local/include
 endif
 
 check: check.c install
@@ -17,7 +19,7 @@ check: check.c install
 install: parser
 	clang -o $(SOFILE) -fPIC -shared -v PrlcParser.tab.c lex.prlc_.c $(SRCDIR)/*.c
 	cp $(SOFILE) $(SOPATH)/$(SOFILE)
-	cp CSources/Prlc*.h /usr/local/include/
+	cp CSources/Prlc*.h $(INCLUDES)/
 
 parser: $(SRCDIR)/PrlcParser.y $(SRCDIR)/PrlcLexer.l
 #   bison -d -Dapi.prefix={prlc_} $(SRCDIR)/PrlcParser.y
@@ -30,4 +32,5 @@ clean: deinstall
 
 deinstall:
 	rm -f $(SOPATH)/$(SOFILE)
-	rm -f /usr/local/incldue/prlc
+	rm -f $(INCLUDES)/Prlc*.h
+
