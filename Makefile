@@ -12,7 +12,7 @@ ifeq ($(UNAME_S),Darwin)
 endif
 
 check: check.c install
-	clang -o check$(SONAME) -l$(SONAME) check.c
+	clang -o check$(SONAME) -L$(SOPATH) -l$(SONAME) check.c
 	./check$(SONAME) PUZ001-1.p 100
 
 install: parser
