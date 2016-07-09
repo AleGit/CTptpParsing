@@ -1,7 +1,7 @@
 # CTptpParsing
 Low level tptp parsing library and [Swift System Module](https://github.com/apple/swift-package-manager/blob/master/Documentation/SystemModules.md) to link against the library.
 
-## Remark
+### Remark
 
 Usually swift system modules are swift packages without any code, e.g. [CYices](https://github.com/AleGit/CYices).
 
@@ -34,7 +34,7 @@ The tptp parsing library can be build and installed with `sudo make install`.
     »richer« »different_hates« »hates« »no_one_hates_everyone« »agatha_hates_agatha«
     »agatha_hates_charles« »killer_hates_victim« »same_hates« »butler_hates_poor«
     »prove_neither_charles_nor_butler_did_it« »negated_conjecture« ¤
-    ```
+```
     
 ## Systems
 
