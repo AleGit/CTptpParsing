@@ -33,6 +33,8 @@
 
 /* _Nullable from CoreFoundation */
 #define _Nullable
+#define _Nonnull
+#define _Null_unspecified
 
 #else /* linux, macOS */
 

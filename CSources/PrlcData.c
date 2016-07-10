@@ -68,6 +68,8 @@ prlc_store* prlcCreateStore(size_t fileSize) {
 }
 
 void prlcDestroyStore(prlc_store** store) {
+  assert (store != NULL);
+  
     free((*store)->symbols.memory);
     free((*store)->p_nodes.memory);
     free((*store)->t_nodes.memory);
@@ -174,6 +176,8 @@ prlc_prefix_node* prlc_prefix_path_follow(prlc_store* store, const char* const s
 }
 
 const char* const prlcGetSymbol(prlc_store* store, const char* symbol) {
+  if (store == NULL) return NULL;
+  if (symbol == NULL) return NULL;
     prlc_prefix_node *p_node = prlc_prefix_path_follow(store, symbol);
 
     return p_node ? p_node->symbol : NULL;
