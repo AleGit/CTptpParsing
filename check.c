@@ -75,19 +75,13 @@ void print_store_symbols(PrlcStoreRef store, PrlcTreeNodeRef root) {
 void check_parse_file(const char *path) {
 	printf("%s\n",path);
 
-	prlc_parse_path (path);
+	PrlcStoreRef store = NULL;
+	PrlcTreeNodeRef root = NULL;
 
-	PrlcStoreRef store = prlcParsingStore;
-	prlc_tree_node* root = prlcParsingRoot;
-
-	prlcParsingStore = NULL;
-	prlcParsingRoot = NULL;
-
-
+	prlcParseFile (path, &store, &root);
 
 	print_store_infos (store);
 	print_store_symbols (store, root);
-
 
 	prlcDestroyStore(store);
 
@@ -148,40 +142,4 @@ int file_size(FILE *file) {
 	}
 
 	return size;
-}
-
-int prlc_parse_path (const char* path) {
-	if (path == NULL) {
-		fprintf(stderr,"prlc_parse_path(NULL)\n");
-		return -1;
-	}
-
-	FILE *file = fopen(path,"r");
-
-	int size = file_size(file);
-
-	if (file == NULL) {
-		// file not found
-		fprintf(stderr,"prlc_parse_path(%s) file could not be oppened.\n", path);
-		return -1;
-	}
-
-	if (size == 0) {
-		// file is empty
-		fprintf(stderr,"prlc_parse_path(%s) file is empty.\n", path);
-		return -1;
-	}
-
-	prlc_in = file;
-	prlc_restart(file);
-	prlc_lineno = 1;
-
-	prlcParsingStore = prlcCreateStore(size);
-	prlcParsingRoot = prlcStoreNodeFile (prlcParsingStore,path,NULL);
-
-	int code = prlc_parse ();
-
-	fclose(file);
-
-	return code;
 }
