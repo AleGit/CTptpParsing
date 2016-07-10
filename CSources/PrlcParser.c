@@ -26,7 +26,7 @@ int prlcParseFile(const char * const path,
     }
 
     FILE *file = fopen(path,"r");
-    
+
     int size = prlc_file_size(file);
 
     if (file == NULL) {
@@ -48,18 +48,12 @@ int prlcParseFile(const char * const path,
     prlcParsingStore = prlcCreateStore(size);
     prlcParsingRoot = prlcStoreNodeFile (prlcParsingStore,path,NULL);
 
-
-    printf("%p %p", prlcParsingStore, prlcParsingRoot);
-
     int code = prlc_parse ();
 
     fclose(file);
 
     *store = prlcParsingStore;
     *root = prlcParsingRoot;
-
-    printf("%p %p", prlcParsingStore, prlcParsingRoot);
-    printf("%p %p", *store, *root);
 
     prlcParsingStore = NULL;
     prlcParsingRoot = NULL;

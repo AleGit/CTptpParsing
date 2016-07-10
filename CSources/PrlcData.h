@@ -64,56 +64,57 @@ typedef struct {
 } prlc_store;
 
 
-typedef prlc_store * _Nullable PrlcStoreRef;
-typedef prlc_shelf * _Nullable PrlcShelfRef;
-typedef prlc_prefix_node * _Nullable PrlcPrefixNodeRef;
-typedef prlc_tree_node * _Nullable PrlcTreeNodeRef;
+typedef prlc_store * _Nullable NullableStoreRef;
+typedef prlc_store * _Nonnull StoreRef;
+typedef prlc_shelf * _Nullable NullableShelfRef;
+typedef prlc_prefix_node * _Nullable NullablePrefixNodeRef;
+typedef prlc_tree_node * _Nullable NullableTreeNodeRef;
 
 // typedef char* PrlcStringRef;
 
 #pragma mark - memory
 
-PrlcStoreRef prlcCreateStore(size_t);
-void prlcDestroyStore(PrlcStoreRef);
+NullableStoreRef prlcCreateStore(size_t);
+void prlcDestroyStore(StoreRef);
 
-PrlcTreeNodeRef treeNode(PrlcStoreRef, size_t index);
+NullableTreeNodeRef treeNode(StoreRef, size_t index);
 
 #pragma mark - store
 
 /// Stores every symbol just once
-const char* _Nullable const prlcStoreSymbol(PrlcStoreRef, const char* _Nullable const symbol);
-const char* _Nullable const prlcGetSymbol(PrlcStoreRef, const char* _Nullable const symbol);
-const char* _Nullable const prlcFirstSymbol(PrlcStoreRef);
-const char* _Nullable const prlcNextSymbol(PrlcStoreRef, const char* _Nullable const symbol);
+const char* _Nullable const prlcStoreSymbol(StoreRef, const char* _Nullable const symbol);
+const char* _Nullable const prlcGetSymbol(NullableStoreRef, const char* _Nullable const symbol);
+const char* _Nullable const prlcFirstSymbol(NullableStoreRef);
+const char* _Nullable const prlcNextSymbol(NullableStoreRef, const char* _Nullable const symbol);
 
-PrlcTreeNodeRef prlcStoreNodeFile(PrlcStoreRef, const char* _Nullable const name, PrlcTreeNodeRef input);
-PrlcTreeNodeRef prlcStoreNodeInclude(PrlcStoreRef, const char* _Nullable const file, PrlcTreeNodeRef selection);
-PrlcTreeNodeRef prlcStoreNodeAnnotated(PrlcStoreRef, PRLC_TREE_NODE_TYPE type,
-                                       const char* _Nullable const name, PrlcTreeNodeRef role, PrlcTreeNodeRef formula, PrlcTreeNodeRef annotations);
-PrlcTreeNodeRef prlcStoreNodeRole(PrlcStoreRef, const char* _Nullable const name);
-PrlcTreeNodeRef prlcStoreNodeConnective(PrlcStoreRef, const char* _Nullable const symbol, PrlcTreeNodeRef firstChild);
+NullableTreeNodeRef prlcStoreNodeFile(NullableStoreRef, const char* _Nullable const name, NullableTreeNodeRef input);
+NullableTreeNodeRef prlcStoreNodeInclude(NullableStoreRef, const char* _Nullable const file, NullableTreeNodeRef selection);
+NullableTreeNodeRef prlcStoreNodeAnnotated(NullableStoreRef, PRLC_TREE_NODE_TYPE type,
+                                       const char* _Nullable const name, NullableTreeNodeRef role, NullableTreeNodeRef formula, NullableTreeNodeRef annotations);
+NullableTreeNodeRef prlcStoreNodeRole(NullableStoreRef, const char* _Nullable const name);
+NullableTreeNodeRef prlcStoreNodeConnective(NullableStoreRef, const char* _Nullable const symbol, NullableTreeNodeRef firstChild);
 
 /// Store a quantified formula.
-PrlcTreeNodeRef prlcStoreNodeQuantified(PrlcStoreRef, const char* _Nullable const quantifier, PrlcTreeNodeRef variables, PrlcTreeNodeRef formula);
+NullableTreeNodeRef prlcStoreNodeQuantified(NullableStoreRef, const char* _Nullable const quantifier, NullableTreeNodeRef variables, NullableTreeNodeRef formula);
 
-PrlcTreeNodeRef prlcStoreNodeFunctional(PrlcStoreRef, const char* _Nullable const symbol, PrlcTreeNodeRef firstChild);
-PrlcTreeNodeRef prlcStoreNodeEquational(PrlcStoreRef, const char* _Nullable const symbol, PrlcTreeNodeRef firstChild);
-PrlcTreeNodeRef prlcStoreNodeConstant(PrlcStoreRef, const char* _Nullable const symbol);
-PrlcTreeNodeRef prlcStoreNodeVariable(PrlcStoreRef, const char* _Nullable const symbol);
+NullableTreeNodeRef prlcStoreNodeFunctional(NullableStoreRef, const char* _Nullable const symbol, NullableTreeNodeRef firstChild);
+NullableTreeNodeRef prlcStoreNodeEquational(NullableStoreRef, const char* _Nullable const symbol, NullableTreeNodeRef firstChild);
+NullableTreeNodeRef prlcStoreNodeConstant(NullableStoreRef, const char* _Nullable const symbol);
+NullableTreeNodeRef prlcStoreNodeVariable(NullableStoreRef, const char* _Nullable const symbol);
 
-PrlcTreeNodeRef prlcStoreNodeName(PrlcStoreRef, const char* _Nullable const name);
+NullableTreeNodeRef prlcStoreNodeName(NullableStoreRef, const char* _Nullable const name);
 
-PrlcTreeNodeRef  prlcSetPredicate(PrlcTreeNodeRef t_node);
+NullableTreeNodeRef  prlcSetPredicate(NullableTreeNodeRef t_node);
 
-PrlcTreeNodeRef prlcNodeAppendNode(PrlcTreeNodeRef first, PrlcTreeNodeRef last);
-PrlcTreeNodeRef prlcNodeAppendChild(PrlcTreeNodeRef parent, PrlcTreeNodeRef last);
+NullableTreeNodeRef prlcNodeAppendNode(NullableTreeNodeRef first, NullableTreeNodeRef last);
+NullableTreeNodeRef prlcNodeAppendChild(NullableTreeNodeRef parent, NullableTreeNodeRef last);
 
-void prlcNodeSetChild(PrlcTreeNodeRef parent, PrlcTreeNodeRef child) __attribute__ ((deprecated));;
+void prlcNodeSetChild(NullableTreeNodeRef parent, NullableTreeNodeRef child) __attribute__ ((deprecated));;
 
 void* _Nullable prlcLabel(const char* _Nullable const label);
 
-PrlcTreeNodeRef prlcFirstTreeNode(PrlcStoreRef);
-PrlcTreeNodeRef prlcTreeNodeAtIndex(PrlcStoreRef, size_t);
+NullableTreeNodeRef prlcFirstTreeNode(NullableStoreRef);
+NullableTreeNodeRef prlcTreeNodeAtIndex(NullableStoreRef, size_t);
 
 
 

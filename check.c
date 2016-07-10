@@ -6,8 +6,8 @@ int prlc_parse_path (const char*);
 int file_size(FILE*);
 
 void print_shelf_info(const char*, const prlc_shelf);
-void print_store_infos(PrlcStoreRef);
-void print_store_symbols(PrlcStoreRef, PrlcTreeNodeRef);
+void print_store_infos(prlc_store*);
+void print_store_symbols(prlc_store*, prlc_tree_node*);
 
 void check_memory();
 void check_string_store();
@@ -41,7 +41,7 @@ void check_memory() {
 
 		printf("%ld\n",size);
 
-		PrlcStoreRef store = prlcCreateStore(size);
+		StoreRef store = prlcCreateStore(size);
 
 		print_store_infos (store);
 
@@ -50,7 +50,7 @@ void check_memory() {
 	}
 }
 
-void print_store_symbols(PrlcStoreRef store, PrlcTreeNodeRef root) {
+void print_store_symbols(StoreRef store, prlc_tree_node* root) {
 	int count = 0;
 	size_t len = 0;
 	const char* name = prlcFirstSymbol (store);
@@ -75,8 +75,8 @@ void print_store_symbols(PrlcStoreRef store, PrlcTreeNodeRef root) {
 void check_parse_file(const char *path) {
 	printf("%s\n",path);
 
-	PrlcStoreRef store = NULL;
-	PrlcTreeNodeRef root = NULL;
+	StoreRef store = NULL;
+	NullableTreeNodeRef root = NULL;
 
 	prlcParseFile (path, &store, &root);
 
@@ -89,7 +89,7 @@ void check_parse_file(const char *path) {
 
 void check_string_store() {
 	printf("*** check_string_store ***\n");
-	PrlcStoreRef store = prlcCreateStore(95000);
+	StoreRef store = prlcCreateStore(95000);
 
 	const char* a = "Agatha";
 	const char* b = "Butler";
@@ -124,7 +124,7 @@ void print_shelf_info(const char* name, const prlc_shelf shelf) {
 	printf("%s: %lu.%lu.%lu (%d %% of %lu bytes)\n", name, shelf.size, shelf.unit, shelf.capacity, promille/10, shelf.capacity*shelf.unit);
 }
 
-void print_store_infos(PrlcStoreRef store) {
+void print_store_infos(StoreRef store) {
 	print_shelf_info("symbols", store->symbols);
 	print_shelf_info("p_nodes", store->p_nodes);
 	print_shelf_info("t_nodes", store->t_nodes);
