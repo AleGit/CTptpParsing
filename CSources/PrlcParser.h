@@ -27,7 +27,7 @@ void prlc_restart(FILE * _Nullable file);
 #pragma mark - PrlcParser.y
 
 int prlc_parse(void);
-int prlc_error (const char * _Nullable s);
+int prlc_error (const char * _Nullable const s);
 
 #pragma mark - parse functions and data structures
 
