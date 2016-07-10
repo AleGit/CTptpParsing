@@ -74,7 +74,7 @@ typedef prlc_tree_node * _Nullable PrlcTreeNodeRef;
 #pragma mark - memory
 
 PrlcStoreRef prlcCreateStore(size_t);
-void prlcDestroyStore(PrlcStoreRef* _Nonnull);
+void prlcDestroyStore(PrlcStoreRef);
 
 PrlcTreeNodeRef treeNode(PrlcStoreRef, size_t index);
 

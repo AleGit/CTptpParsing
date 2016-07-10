@@ -45,7 +45,7 @@ void check_memory() {
 
 		print_store_infos (store);
 
-		prlcDestroyStore(&store);
+		prlcDestroyStore(store);
 		size *= 2;
 	}
 }
@@ -89,7 +89,7 @@ void check_parse_file(const char *path) {
 	print_store_symbols (store, root);
 
 
-	prlcDestroyStore(&store);
+	prlcDestroyStore(store);
 
 }
 
@@ -118,7 +118,7 @@ void check_string_store() {
 	printf("\n");
 	print_store_infos(store);
 
-	prlcDestroyStore(&store);
+	prlcDestroyStore(store);
 	printf("=== check_string_store ===\n");
 }
 

@@ -67,15 +67,13 @@ prlc_store* prlcCreateStore(size_t fileSize) {
     return store;
 }
 
-void prlcDestroyStore(prlc_store** store) {
-  assert (store != NULL);
-  
-    free((*store)->symbols.memory);
-    free((*store)->p_nodes.memory);
-    free((*store)->t_nodes.memory);
+void prlcDestroyStore(prlc_store* store) {
 
-    free(*store);
-    *store = NULL;
+    free(store->symbols.memory);
+    free(store->p_nodes.memory);
+    free(store->t_nodes.memory);
+
+    free(store);
 }
 
 #pragma mark -
