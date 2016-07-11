@@ -216,7 +216,10 @@ prlc_tree_node* prlc_tree_node_new(prlc_store* store) {
     return node;
 }
 
-prlc_tree_node* prlc_tree_node_save(prlc_store *store, PRLC_TREE_NODE_TYPE type, const char* const symbol, prlc_tree_node *child) {
+prlc_tree_node* prlc_tree_node_save(prlc_store *store,
+  PRLC_TREE_NODE_TYPE type,
+  const char* const symbol,
+  prlc_tree_node *child) {
     prlc_tree_node* t_node = prlc_tree_node_new(store);
 
     t_node->type = type;
@@ -228,8 +231,8 @@ prlc_tree_node* prlc_tree_node_save(prlc_store *store, PRLC_TREE_NODE_TYPE type,
     return t_node;
 }
 
-prlc_tree_node* prlcStoreNodeFile(prlc_store* store, const char* const name, prlc_tree_node* input) {
-    return prlc_tree_node_save(store, PRLC_FILE, name, input);
+prlc_tree_node* prlcStoreNodeFile(prlc_store* store, const char* const name) {
+    return prlc_tree_node_save(store, PRLC_FILE, name, NULL);
 }
 
 prlc_tree_node* prlcStoreNodeAnnotated(prlc_store* store, PRLC_TREE_NODE_TYPE type, const char* const name, prlc_tree_node* role, prlc_tree_node* formula, prlc_tree_node* annotations) {
@@ -342,6 +345,14 @@ void* prlcLabel(const char* const label) {
 prlc_tree_node* prlcFirstTreeNode(prlc_store* store) {
     assert(0 < store->t_nodes.size);
     return store->t_nodes.memory;
+}
+
+prlc_tree_node * prlcNextTreeNode(prlc_store* store, prlc_tree_node* node) {
+  assert(store != NULL);
+  assert(node != NULL);
+
+  size_t index = node - prlcFirstTreeNode(store);
+  return prlcTreeNodeAtIndex(store, index+1);
 }
 
 prlc_tree_node* prlcTreeNodeAtIndex(prlc_store* store, size_t index) {

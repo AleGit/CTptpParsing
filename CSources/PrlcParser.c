@@ -18,8 +18,8 @@ int prlc_file_size(FILE *file) {
 }
 
 
-int prlcParseFile(const char * const path,
-  prlc_store** store, prlc_tree_node** root) {
+int prlcParseFile(const char * const path, prlc_store** store, prlc_tree_node** root) {
+
     if (path == NULL) {
       fprintf(stderr,"prlc_parse_path(NULL)\n");
       return -1;
@@ -46,7 +46,7 @@ int prlcParseFile(const char * const path,
     prlc_lineno = 1;
 
     prlcParsingStore = prlcCreateStore(size);
-    prlcParsingRoot = prlcStoreNodeFile (prlcParsingStore,path,NULL);
+    prlcParsingRoot = prlcStoreNodeFile (prlcParsingStore,path);
 
     int code = prlc_parse ();
 

@@ -66,46 +66,71 @@ typedef struct {
 #pragma mark - memory
 
 prlc_store*  prlcCreateStore(size_t);
-void prlcDestroyStore(prlc_store* );
-
-prlc_tree_node *  treeNode(prlc_store* , size_t index);
+void prlcDestroyStore(prlc_store*);
 
 #pragma mark - store
 
-/// Stores every symbol just once
-const char*  const prlcStoreSymbol(prlc_store* , const char*  const symbol);
-const char*  const prlcGetSymbol(prlc_store* , const char*  const symbol);
-const char*  const prlcFirstSymbol(prlc_store* );
-const char*  const prlcNextSymbol(prlc_store* , const char*  const symbol);
+/// Stores every symbol just once.
+const char * const prlcStoreSymbol(prlc_store *, const char* const symbol);
 
-prlc_tree_node *  prlcStoreNodeFile(prlc_store* , const char*  const name, prlc_tree_node *  input);
-prlc_tree_node *  prlcStoreNodeInclude(prlc_store* , const char*  const file, prlc_tree_node *  selection);
-prlc_tree_node *  prlcStoreNodeAnnotated(prlc_store* , PRLC_TREE_NODE_TYPE type,
-                                       const char*  const name, prlc_tree_node *  role, prlc_tree_node *  formula, prlc_tree_node *  annotations);
-prlc_tree_node *  prlcStoreNodeRole(prlc_store* , const char*  const name);
-prlc_tree_node *  prlcStoreNodeConnective(prlc_store* , const char*  const symbol, prlc_tree_node *  firstChild);
+/// Returns stored symbol or NULL if symbol is not stored.
+const char * const prlcGetSymbol(prlc_store *, const char * const symbol);
+
+/// Returns first stored symbol or NULL if no symbol is stored.
+const char * const prlcFirstSymbol(prlc_store *);
+
+/// Returns next sequentially stored symbol or NULL if there is no next sstored symbol.
+const char * const prlcNextSymbol(prlc_store *, const char * const symbol);
+
+/// Store probelm or axiom file 'name' in tree, usually as first node, i.e. as root node.
+prlc_tree_node *  prlcStoreNodeFile(prlc_store *, const char * const name);
+
+/// Store <include> with
+/// - <file_name>
+/// - <formula_selection> (nullable).
+prlc_tree_node *  prlcStoreNodeInclude(prlc_store *,
+  const char * const file_name,
+  prlc_tree_node * formula_selection);
+
+/// Store <annotated_formula> with
+/// - 'PRLC_CNF' or 'PRLC_FOF'
+/// - <name>
+/// - <formula_role>,
+/// - <cnf_formula> or <fof_formula>,
+/// - <annotations> (nullable).
+prlc_tree_node * prlcStoreNodeAnnotated(prlc_store * ,
+  PRLC_TREE_NODE_TYPE type,
+  const char * const name,
+  prlc_tree_node * role,
+  prlc_tree_node * formula,
+  prlc_tree_node * annotations);
+
+/// Store <formula_role>
+prlc_tree_node *  prlcStoreNodeRole(prlc_store *, const char * const name);
+prlc_tree_node *  prlcStoreNodeConnective(prlc_store* , const char * const symbol, prlc_tree_node * firstChild);
 
 /// Store a quantified formula.
-prlc_tree_node *  prlcStoreNodeQuantified(prlc_store* , const char*  const quantifier, prlc_tree_node *  variables, prlc_tree_node *  formula);
+prlc_tree_node *  prlcStoreNodeQuantified(prlc_store* , const char * const quantifier, prlc_tree_node * variables, prlc_tree_node *  formula);
 
-prlc_tree_node *  prlcStoreNodeFunctional(prlc_store* , const char*  const symbol, prlc_tree_node *  firstChild);
-prlc_tree_node *  prlcStoreNodeEquational(prlc_store* , const char*  const symbol, prlc_tree_node *  firstChild);
-prlc_tree_node *  prlcStoreNodeConstant(prlc_store* , const char*  const symbol);
-prlc_tree_node *  prlcStoreNodeVariable(prlc_store* , const char*  const symbol);
+prlc_tree_node *  prlcStoreNodeFunctional(prlc_store* , const char * const symbol, prlc_tree_node * firstChild);
+prlc_tree_node *  prlcStoreNodeEquational(prlc_store* , const char * const symbol, prlc_tree_node * firstChild);
+prlc_tree_node *  prlcStoreNodeConstant(prlc_store* , const char * const symbol);
+prlc_tree_node *  prlcStoreNodeVariable(prlc_store* , const char * const symbol);
 
-prlc_tree_node *  prlcStoreNodeName(prlc_store* , const char*  const name);
+prlc_tree_node *  prlcStoreNodeName(prlc_store *, const char * const name);
 
-prlc_tree_node *   prlcSetPredicate(prlc_tree_node *  t_node);
+prlc_tree_node *  prlcSetPredicate(prlc_tree_node * t_node);
 
-prlc_tree_node *  prlcNodeAppendNode(prlc_tree_node *  first, prlc_tree_node *  last);
-prlc_tree_node *  prlcNodeAppendChild(prlc_tree_node *  parent, prlc_tree_node *  last);
+prlc_tree_node *  prlcNodeAppendNode(prlc_tree_node * first, prlc_tree_node * last);
+prlc_tree_node *  prlcNodeAppendChild(prlc_tree_node * parent, prlc_tree_node * last);
 
 void prlcNodeSetChild(prlc_tree_node *  parent, prlc_tree_node *  child) __attribute__ ((deprecated));;
 
-void*  prlcLabel(const char*  const label);
+void*  prlcLabel(const char * const label);
 
-prlc_tree_node *  prlcFirstTreeNode(prlc_store* );
-prlc_tree_node *  prlcTreeNodeAtIndex(prlc_store* , size_t);
+prlc_tree_node * prlcFirstTreeNode(prlc_store *);
+prlc_tree_node * prlcNextTreeNode(prlc_store *, prlc_tree_node *);
+prlc_tree_node * prlcTreeNodeAtIndex(prlc_store *, size_t);
 
 
 
