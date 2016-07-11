@@ -33,4 +33,3 @@ clean: deinstall
 deinstall:
 	rm -f $(SOPATH)/$(SOFILE)
 	rm -f $(INCLUDES)/Prlc*.h
-

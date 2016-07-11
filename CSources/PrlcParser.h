@@ -31,11 +31,11 @@ int prlc_error (const char * _Nullable const s);
 
 #pragma mark - parse functions and data structures
 
-int prlcParseFile(const char *_Nonnull const,
+int prlcParseFile(const char * _Nonnull const,
   prlc_store * _Nullable * _Nonnull,
   prlc_tree_node * _Nullable * _Nonnull);
 
-extern prlc_store* _Nullable prlcParsingStore;
-extern prlc_tree_node* _Nullable prlcParsingRoot;
+extern prlc_store * _Nullable prlcParsingStore;
+extern prlc_tree_node * _Nullable prlcParsingRoot;
 
 #endif /* PrlcParser_h */
