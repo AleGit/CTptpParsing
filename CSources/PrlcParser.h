@@ -16,26 +16,26 @@ extern int prlc_leng;
 extern unsigned long prlc_leng;
 #endif
 
-extern char * _Nullable prlc_text;
-extern FILE * _Nullable prlc_in;
+extern char * prlc_text;
+extern FILE * prlc_in;
 
 void prlc_output(void);
 
 int prlc_lex(void);
-void prlc_restart(FILE * _Nullable file);
+void prlc_restart(FILE * file);
 
 #pragma mark - PrlcParser.y
 
 int prlc_parse(void);
-int prlc_error (const char * _Nullable const s);
+int prlc_error (const char * const s);
 
 #pragma mark - parse functions and data structures
 
-int prlcParseFile(const char * _Nonnull const,
-  prlc_store * _Nullable * _Nonnull,
-  prlc_tree_node * _Nullable * _Nonnull);
+int prlcParseFile(const char *  const,
+  prlc_store ** ,
+  prlc_tree_node ** );
 
-extern prlc_store * _Nullable prlcParsingStore;
-extern prlc_tree_node * _Nullable prlcParsingRoot;
+extern prlc_store * prlcParsingStore;
+extern prlc_tree_node * prlcParsingRoot;
 
 #endif /* PrlcParser_h */

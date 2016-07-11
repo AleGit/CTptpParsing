@@ -31,12 +31,9 @@
 
 #endif
 
-/* _Nullable from CoreFoundation */
-#define _Nullable
-#define _Nonnull
-#define _Null_unspecified
+/* _Nullable, _Nonnull, _Null_unspecified seem unavailable on linux */
 
-#else /* linux, macOS */
+#else /* linux <> macOS */
 
 #import <CoreFoundation/CoreFoundation.h>
 
