@@ -35,3 +35,8 @@
 # Backup files
 *~
 
+# intermediate files
+checkTptpParsing
+lex.prlc_.c
+PrlcParser.tab.c
+PrlcParser.tab.h
