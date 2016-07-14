@@ -69,9 +69,11 @@ prlc_store* prlcCreateStore(size_t fileSize) {
 
 void prlcDestroyStore(prlc_store* store) {
 
-    free(store->symbols.memory);
-    free(store->p_nodes.memory);
-    free(store->t_nodes.memory);
+    if (!store) return;
+
+    if (store->symbols.memory) free(store->symbols.memory);
+    if (store->p_nodes.memory) free(store->p_nodes.memory);
+    if (store->t_nodes.memory) free(store->t_nodes.memory);
 
     free(store);
 }
