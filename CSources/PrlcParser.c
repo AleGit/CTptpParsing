@@ -17,6 +17,7 @@ int prlc_file_size(FILE *file) {
   return size;
 }
 
+// (unused) print store statistics
 void prlc_store_stats(prlc_store *store) {
 
     if (store->symbols.capacity) printf("symb: %zu/%zu = %zu%% @ %p\n", store->t_nodes.size, store->symbols.capacity, (5 + store->symbols.size * 1000) / store->symbols.capacity / 10, store->symbols.memory);
@@ -27,16 +28,16 @@ void prlc_store_stats(prlc_store *store) {
     printf("%ld bytes\n",bytes);
 }
 
+// (unsused) adjust pointer
 void advance(void **p, long amount) {
   if (*p && amount) *p += amount;
 }
 
+// (unused) realloc memories and adjusts pointers
 prlc_tree_node* prlc_minimize_store(prlc_store *store) {
   prlc_store_stats(store);
 
   long s_diff = 0, p_diff = 0, t_diff = 0;
-
-
 
   // there is no need to keep the prefix tree
   free(store->p_nodes.memory);
@@ -124,7 +125,12 @@ int prlcParseFile(const char * const path, prlc_store** store, prlc_tree_node** 
     fclose(file);
 
     *store = prlcParsingStore;
-    *root = prlc_minimize_store(*store);
+    *root = prlcParsingRoot;
+
+    // it seems as memory optimization is not needed
+    // but intruduces small runtime overhead and
+    // additional failure possibilites.
+    // *root = prlc_minimize_store(*store);
 
     prlcParsingStore = NULL;
     prlcParsingRoot = NULL;

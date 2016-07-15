@@ -17,11 +17,11 @@ endif
 
 
 check: check.c install
-	clang -o check$(SONAME) -l$(SONAME) check.c
+	clang -Ofast -o check$(SONAME) -l$(SONAME) check.c
 	./check$(SONAME) PUZ001-1.p 100
 
 install: parser
-	clang -o $(SOPATH)/$(SOFILE) $(FLAGS) PrlcParser.tab.c lex.prlc_.c $(SRCDIR)/*.c
+	clang -Ofast -o $(SOPATH)/$(SOFILE) $(FLAGS) PrlcParser.tab.c lex.prlc_.c $(SRCDIR)/*.c
 	cp CSources/Prlc*.h $(INCLUDES)/
 
 parser: $(SRCDIR)/PrlcParser.y $(SRCDIR)/PrlcLexer.l
