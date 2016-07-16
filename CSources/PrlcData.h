@@ -11,9 +11,9 @@ typedef enum {
 
     PRLC_FILE,        // n children
 
-    PRLC_FOF,         //
-    PRLC_CNF,         //
-    PRLC_INCLUDE,     //
+    PRLC_FOF,         // 2-3 children: role, formula, (annotations)
+    PRLC_CNF,         // 2-3 children: role, formula, (annotations)
+    PRLC_INCLUDE,     // n children: (selection)
 
     PRLC_NAME,        // nil children
     PRLC_ROLE,        // nil children
