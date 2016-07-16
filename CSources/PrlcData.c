@@ -16,6 +16,8 @@ void prlc_alloc_memory(prlc_shelf* shelf, size_t capacity, size_t unit) {
     shelf->size = 0;
 }
 
+/// Store syntactically predefined symbols
+/// so that they appear in front.
 void prlc_copy_predefined_symbols(prlc_store *store) {
   assert(store != NULL);
 

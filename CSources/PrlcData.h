@@ -7,26 +7,26 @@
 #include "PrlcCore.h"
 
 typedef enum {
-    PRLC_UNDEFINED = 0,
+    PRLC_UNDEFINED = 0, // n children, n in 0..<Int.max
 
-    PRLC_FILE,
+    PRLC_FILE,        // n children
 
-    PRLC_FOF,
-    PRLC_CNF,
-    PRLC_INCLUDE,
+    PRLC_FOF,         //
+    PRLC_CNF,         //
+    PRLC_INCLUDE,     //
 
-    PRLC_NAME,
-    PRLC_ROLE,
-    PRLC_ANNOTATION,
+    PRLC_NAME,        // nil children
+    PRLC_ROLE,        // nil children
+    PRLC_ANNOTATION,  // n children (untested)
 
-    PRLC_QUANTIFIER,
-    PRLC_CONNECTIVE,
+    PRLC_QUANTIFIER,  // n+1 children, n variables, last child is formula
+    PRLC_CONNECTIVE,  // n+1 children
 
-    PRLC_EQUATIONAL,
-    PRLC_PREDICATE,
+    PRLC_EQUATIONAL,  // 2 children
+    PRLC_PREDICATE,   // n children
 
-    PRLC_FUNCTION,
-    PRLC_VARIABLE
+    PRLC_FUNCTION,    // n children
+    PRLC_VARIABLE     // nil children
 } PRLC_TREE_NODE_TYPE;
 
 typedef struct prlc_tree_node {
@@ -34,13 +34,13 @@ typedef struct prlc_tree_node {
     PRLC_TREE_NODE_TYPE type;
 
     struct prlc_tree_node *  sibling;
-    struct prlc_tree_node *  lastSibling;
+    struct prlc_tree_node *  lastSibling; // speedup appends
     struct prlc_tree_node *  child;
 } prlc_tree_node;
 
 typedef struct prlc_prefix_node {
     const char*  symbol;
-    struct prlc_prefix_node *  nexts[256];
+    struct prlc_prefix_node * nexts[256];
 } prlc_prefix_node;
 
 
@@ -65,7 +65,10 @@ typedef struct {
 
 #pragma mark - memory
 
+/// Allocs memory for symbols, prefix tree and abstract syntax tree.
 prlc_store*  prlcCreateStore(size_t);
+
+/// Frees memory for symbols and syntax tree.
 void prlcDestroyStore(prlc_store*);
 
 #pragma mark - store
@@ -101,9 +104,9 @@ prlc_tree_node *  prlcStoreNodeInclude(prlc_store *,
 prlc_tree_node * prlcStoreNodeAnnotated(prlc_store * ,
   PRLC_TREE_NODE_TYPE type,
   const char * const name,
-  prlc_tree_node * role,
-  prlc_tree_node * formula,
-  prlc_tree_node * annotations);
+  prlc_tree_node * role,         // mandatory first schild
+  prlc_tree_node * formula,      // mandatory second child
+  prlc_tree_node * annotations); // optional third child
 
 /// Store <formula_role>
 prlc_tree_node *  prlcStoreNodeRole(prlc_store *, const char * const name);
@@ -126,7 +129,7 @@ prlc_tree_node *  prlcNodeAppendChild(prlc_tree_node * parent, prlc_tree_node * 
 
 void prlcNodeSetChild(prlc_tree_node *  parent, prlc_tree_node *  child) __attribute__ ((deprecated));;
 
-void*  prlcLabel(const char * const label);
+void* prlcLabel(const char * const label);
 
 prlc_tree_node * prlcFirstTreeNode(prlc_store *);
 prlc_tree_node * prlcNextTreeNode(prlc_store *, prlc_tree_node *);
