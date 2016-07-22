@@ -68,6 +68,9 @@ typedef struct {
 /// Allocs memory for symbols, prefix tree and abstract syntax tree.
 prlc_store*  prlcCreateStore(size_t);
 
+/// Optimze memory usage of read only store.
+prlc_tree_node* prlcSetStoreReadOnly(prlc_store *store);
+
 /// Frees memory for symbols and syntax tree.
 void prlcDestroyStore(prlc_store*);
 
@@ -136,6 +139,7 @@ prlc_tree_node * prlcNextTreeNode(prlc_store *, prlc_tree_node *);
 prlc_tree_node * prlcTreeNodeAtIndex(prlc_store *, size_t);
 
 
+int prlc_file_size(FILE *file);
 
 
 #endif /* PrlcData_h */
