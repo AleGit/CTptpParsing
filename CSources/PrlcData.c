@@ -57,7 +57,7 @@ prlc_store* prlcCreateStore(size_t fileSize) {
 	//	    hwv134   276455091
 	size_t maxSize = 12000000000; // manually derived on Linux
 
-	size_t sSize = prlc_min(42+fileSize/3, 1 + maxSize / sizeof(char));
+	size_t sSize = prlc_min(fileSize, 1 + maxSize / sizeof(char));
 	size_t pSize = prlc_min(fileSize, 1 + maxSize / sizeof(prlc_prefix_node));
 	size_t tSize = prlc_min(fileSize, 1 + maxSize / sizeof(prlc_tree_node));
 
