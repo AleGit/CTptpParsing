@@ -48,25 +48,31 @@ void prlc_copy_predefined_symbols(prlc_store *store) {
 }
 
 prlc_store* prlcCreateStore(size_t fileSize) {
-    prlc_store* store = calloc(1,sizeof(prlc_store));
+  prlc_store* store = calloc(1,sizeof(prlc_store));
+  assert(store);
 
-
-    fileSize = prlc_max(fileSize, 1024);
+  fileSize = prlc_max(fileSize, 1024);
+  assert(fileSize > 0);
 
 	//	    hwv134   276455091
-	size_t maxSize = 12000000000;
+	size_t maxSize = 12000000000; // manually derived on Linux
 
-	size_t sSize = prlc_min(fileSize/4, 1 + maxSize / sizeof(char));
+	size_t sSize = prlc_min(42+fileSize/3, 1 + maxSize / sizeof(char));
 	size_t pSize = prlc_min(fileSize, 1 + maxSize / sizeof(prlc_prefix_node));
 	size_t tSize = prlc_min(fileSize, 1 + maxSize / sizeof(prlc_tree_node));
 
-    prlc_alloc_memory(&(store->symbols), sSize, sizeof(char));
-    prlc_alloc_memory(&(store->p_nodes), pSize, sizeof(prlc_prefix_node));
-    prlc_alloc_memory(&(store->t_nodes), tSize, sizeof(prlc_tree_node));
+  prlc_alloc_memory(&(store->symbols), sSize, sizeof(char));
+  assert(&store->symbols);
 
-    prlc_copy_predefined_symbols(store);
+  prlc_alloc_memory(&(store->p_nodes), pSize, sizeof(prlc_prefix_node));
+  assert(&store->p_nodes);
 
-    return store;
+  prlc_alloc_memory(&(store->t_nodes), tSize, sizeof(prlc_tree_node));
+  assert(&store->t_nodes);
+
+  prlc_copy_predefined_symbols(store);
+
+  return store;
 }
 
 void prlcDestroyStore(prlc_store* store) {
