@@ -6,7 +6,6 @@
 #import <pthread.h>
 #import "PrlcParser.h"
 #import "PrlcData.h"
-#import "PrlcData_private.h"
 
 prlc_store* prlcParsingStore = NULL;
 prlc_tree_node* prlcParsingRoot = NULL;
