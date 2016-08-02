@@ -18,7 +18,7 @@ endif
 
 check: check.c install
 	clang -Ofast -o check$(SONAME) -l$(SONAME) check.c
-	./check$(SONAME) PUZ001-1.p 100
+	time ./check$(SONAME) PUZ001-1.p 100
 
 install: parser
 	clang -Ofast -o $(SOPATH)/$(SOFILE) $(FLAGS) PrlcParser.tab.c lex.prlc_.c $(SRCDIR)/*.c

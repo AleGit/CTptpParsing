@@ -19,9 +19,9 @@
 
 #else
 
-#define INFO_CNF(a) 
-#define INFO_FOF(a) 
-#define INFO_INCLUDE(a) 
+#define INFO_CNF(a)
+#define INFO_FOF(a)
+#define INFO_INCLUDE(a)
 
 #endif
 
@@ -32,14 +32,18 @@
 
 // #define CREATE_ANNOTATED(a, b, c, d, e)                 prlcLabel("annotated")
 
-#define CREATE_FOF(name, role, root, annotations)       prlcStoreNodeAnnotated(PS, PRLC_FOF, name, role, root, annotations) INFO_FOF(name)
-#define CREATE_CNF(name, role, root, annotations)       prlcStoreNodeAnnotated(PS, PRLC_CNF, name, role, root, annotations) INFO_CNF(name)
-#define CREATE_INCLUDE(fileName, nameList)              prlcStoreNodeInclude(PS, fileName, nameList) INFO_INCLUDE(fileName)
+#define CREATE_FOF(name, role, fof_formula, annotations)       prlcStoreNodeAnnotated(PS, PRLC_FOF, name, role, fof_formula, annotations) INFO_FOF(name)
+#define CREATE_CNF(name, role, cnf_formula, annotations)       prlcStoreNodeAnnotated(PS, PRLC_CNF, name, role, cnf_formula, annotations) INFO_CNF(name)
+#define CREATE_INCLUDE(fileName, nameList)                     prlcStoreNodeInclude(PS, fileName, nameList) INFO_INCLUDE(fileName)
+
+#define CREATE_DFOF(fof_formula)                      NULL; printf("CREATE_DFOF niy"); assert(false)
+#define CREATE_DCNF(cnf_formula)                      NULL; printf("CREATE_DCNF niy"); assert(false)
+#define CREATE_FOT(term)                          NULL; printf("CREATE_FOT niy"); assert(false)
 
 #define TPTP_INPUT(input)                               input; prlcNodeAppendChild(PR, input)
 #define TPTP_INPUT_APPEND(sequence, input)              prlcNodeAppendNode(sequence, input)
 
-#define CREATE_Quantified(q, vars, ufrm)                   prlcStoreNodeQuantified(PS, q, vars, ufrm)
+#define CREATE_Quantified(q, vars, ufrm)                prlcStoreNodeQuantified(PS, q, vars, ufrm)
 #define CREATE_Functional(f, first)                     prlcStoreNodeFunctional(PS, f, first)
 #define CREATE_Equational(e, first)                     prlcStoreNodeEquational(PS, e, first)
 #define CREATE_Connective(c, first)                     prlcStoreNodeConnective(PS, c, first)

@@ -1,22 +1,22 @@
 /*  Created by Alexander Maringele.
     Copyright (c) 2015 Alexander Maringele. All rights reserved.
- 
+
     Parser for input files in TPTP/CNF or TPTP/FOF format.
- 
+
     http://www.cs.miami.edu/~tptp/TPTP/SyntaxBNF.html
- 
+
 */
 
 %{
 /* *** C DECLARATIONS *************************************************************************** */
-    
+
 #import "CSources/PrlcMacros.h"
 #import "CSources/PrlcParser.h"
-    
+
 %}
 /*** YACC/BISON DECLARATIONS ***/
 
-/* 
+/*
 %define api.prefix {prlc_}
 	* does not work on all platforms, e.g. macOS
 	* flag '-p prlc_' is used instead
@@ -175,11 +175,11 @@ annotated_formula   :   fof_annotated
  tff_annotated       :   TFF '(' name ',' formula_role ',' tff_formula annotations ')' '.'
  */
 fof_annotated       :   FOF '(' name ',' formula_role ',' fof_formula annotations ')' '.' {
-    $$=CREATE_FOF($3, $5, $7, $8); 
+    $$=CREATE_FOF($3, $5, $7, $8);
 }
 
 cnf_annotated       :   CNF '(' name ',' formula_role ',' cnf_formula annotations ')' '.' {
-    $$=CREATE_CNF($3, $5, $7, $8); 
+    $$=CREATE_CNF($3, $5, $7, $8);
 }
 
 annotations         :   /* epsilon */   { $$ = NULLREF; }
@@ -287,7 +287,7 @@ literal             :   atomic_formula { $$ = $1; }
  literal ->  atomic_formula     ->  term = term
  ->  ~ atomic_formula   ->  ~ term = term
  ->  fol_infix_unary    ->  term != term
- 
+
  NOT AN ATOMIC FORMULA :::::::::::  ~ term = term
  NOT A LITERAL :::::::::::::::::::  ~ ~ term = term
  NOT AN ATOMIC FORMULA :::::::::::  term != term
@@ -301,7 +301,7 @@ literal             :   atomic_formula { $$ = $1; }
 fol_infix_unary     :   term INFIX_INEQUALITY term      {$$=CREATE_Equational(_NEQ_,CREATE_NODES2($1,$3));}
 /*                    |   term '=' term           */
 /* Is the rule "term '=' term" missing?
- 
+
  /*%----Connectives - THF */
 /*%----Connectives - THF and TFF */
 /*
@@ -407,8 +407,8 @@ source                  :   general_term
 
 
 /*---- Useful info fields */
-optional_info       :   /* epsilon */
-|   ',' useful_info
+optional_info       :   /* epsilon */ { $$ = NULLREF; }
+                    |   ',' useful_info { $$ = $2; }
 
 useful_info         :   general_list
 // useful_info      :== '[' ']' | '[' info_items ']'
@@ -439,16 +439,16 @@ name_list           :   name { $$ = CREATE_STRINGS1($1); }
 general_term        :   general_data
 |   general_data  ':' general_term
 |   general_list
-general_data        :   atomic_word
+general_data        :   atomic_word                 { $$=CREATE_Constant($1); }
                     |   general_function
                     |   variable                    { $$=CREATE_Variable($1); }
                     |   number                      { $$=CREATE_Constant($1); }
                     |   DISTINCT_OBJECT             { $$=CREATE_DISTINCT($1); }
                     |   formula_data
-general_function    :   atomic_word '(' general_terms ')'
-formula_data        :   DOLLAR_FOF '(' fof_formula ')'
-                    |   DOLLAR_CNF '(' cnf_formula ')'
-                    |   DOLLAR_FOT '(' term ')'
+general_function    :   atomic_word '(' general_terms ')' { $$=CREATE_Functional($1, $3); }
+formula_data        :   DOLLAR_FOF '(' fof_formula ')' { $$=CREATE_DFOF($3); }
+                    |   DOLLAR_CNF '(' cnf_formula ')' { $$=CREATE_DCNF($3); }
+                    |   DOLLAR_FOT '(' term ')'        { $$=CREATE_FOT($3); }
 general_list        :   '[' ']' { $$=NULLREF; }
                     |   '[' general_terms ']' {$$=NULLREF;}
 general_terms       :   general_term
@@ -470,7 +470,7 @@ number                  :   INTEGER                 { $$ = CREATE_STRING($1); }
 
 
 file_name           :   SINGLE_QUOTED               { $$ = CREATE_STRING($1);}
-null                :   /* <null> */
+//null                :   /* <null> */
 
 /*
  %----Rules from her on down are for defining tokens (terminal symbols) of the
@@ -490,6 +490,3 @@ int yyerror (const char *s)
     //snprintf(globalStringBuffer, MAX_GLOBAL_STRING_BUFFER_SIZE, format, yylineno, s, yytext, yychar);
     return 0;
 }
-
-
-

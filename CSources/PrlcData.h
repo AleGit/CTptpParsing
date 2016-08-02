@@ -34,6 +34,8 @@ typedef struct prlc_tree_node {
     PRLC_TREE_NODE_TYPE type;
 
     struct prlc_tree_node *  sibling;
+    /// the first sibling, i.e. a node which is not refernced as sibling
+    /// must hold the reference to the last sibling in the chain of siblings.
     struct prlc_tree_node *  lastSibling; // speedup appends
     struct prlc_tree_node *  child;
 } prlc_tree_node;

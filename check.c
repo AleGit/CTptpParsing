@@ -125,9 +125,9 @@ void print_shelf_info(const char* name, const prlc_shelf shelf) {
 }
 
 void print_store_infos(prlc_store* store) {
-	print_shelf_info("symbols", store->symbols);
-	print_shelf_info("p_nodes", store->p_nodes);
-	print_shelf_info("t_nodes", store->t_nodes);
+	if (store->symbols.capacity) print_shelf_info("symbols", store->symbols);
+	if (store->p_nodes.capacity) print_shelf_info("p_nodes", store->p_nodes);
+	if (store->t_nodes.capacity) print_shelf_info("t_nodes", store->t_nodes);
 }
 
 // total size of file in bytes

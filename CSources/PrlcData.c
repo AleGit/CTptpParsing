@@ -30,14 +30,13 @@ void prlc_copy_predefined_symbols(prlc_store *store) {
     prlcStoreSymbol(store, "-->");  // gentzen
     prlcStoreSymbol(store, ",");    // comma
 
-    prlcStoreSymbol(store, "<=>");  // if
+    prlcStoreSymbol(store, "<=>");  // iff
     prlcStoreSymbol(store, "=>");   // imply
     prlcStoreSymbol(store, "<=");   // ylpmi
 
-    prlcStoreSymbol(store, "<~>");  // niff = xor
+    prlcStoreSymbol(store, "<~>");  // niff ~ xor
     prlcStoreSymbol(store, "~|");   // nor
     prlcStoreSymbol(store, "~&");   // nand
-
 
     prlcStoreSymbol(store, "!");    // forall
     prlcStoreSymbol(store, "?");    // exists
@@ -51,23 +50,22 @@ prlc_store* prlcCreateStore(size_t fileSize) {
   prlc_store* store = calloc(1,sizeof(prlc_store));
   assert(store);
 
-  fileSize = prlc_max(fileSize, 1024);
-  assert(fileSize > 0);
+  fileSize = prlc_max(fileSize, 1024*16);
 
 	//	    hwv134   276455091
-	size_t maxSize = 12000000000; // manually derived on Linux
+	size_t maxBytes = 12000000000; // manually derived on Linux
 
-	size_t sSize = prlc_min(fileSize, 1 + maxSize / sizeof(char));
-	size_t pSize = prlc_min(fileSize, 1 + maxSize / sizeof(prlc_prefix_node));
-	size_t tSize = prlc_min(fileSize, 1 + maxSize / sizeof(prlc_tree_node));
+	size_t sCapacity = prlc_min(fileSize/3, 1 + maxBytes / sizeof(char));
+	size_t pCapacity = prlc_min(fileSize, 1 + maxBytes / sizeof(prlc_prefix_node));
+	size_t tCapacity = prlc_min(fileSize/3, 1 + maxBytes / sizeof(prlc_tree_node));
 
-  prlc_alloc_memory(&(store->symbols), sSize, sizeof(char));
+  prlc_alloc_memory(&(store->symbols), sCapacity, sizeof(char));
   assert(&store->symbols);
 
-  prlc_alloc_memory(&(store->p_nodes), pSize, sizeof(prlc_prefix_node));
+  prlc_alloc_memory(&(store->p_nodes), pCapacity, sizeof(prlc_prefix_node));
   assert(&store->p_nodes);
 
-  prlc_alloc_memory(&(store->t_nodes), tSize, sizeof(prlc_tree_node));
+  prlc_alloc_memory(&(store->t_nodes), tCapacity, sizeof(prlc_tree_node));
   assert(&store->t_nodes);
 
   prlc_copy_predefined_symbols(store);
@@ -420,12 +418,16 @@ prlc_tree_node* prlcSetStoreReadOnly(prlc_store *store) {
   char *old_symbols = store->symbols.memory;
   char *new_symbols = realloc(old_symbols, new_capacity);
 
+  assert(new_symbols);
+
   if (new_symbols) {
     assert( !strncmp(new_symbols+3,"|",2));
-
-      store->symbols.memory = new_symbols;
-      store->symbols.capacity = new_capacity;
-      s_diff = new_symbols - old_symbols;
+    store->symbols.memory = new_symbols;
+    store->symbols.capacity = new_capacity;
+    s_diff = new_symbols - old_symbols;
+  }
+  else {
+    fprintf(stderr,"ERROR: store->symbols resizing failed.");
   }
 
   /* relocate syntax tree */
