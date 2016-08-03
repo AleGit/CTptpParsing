@@ -31,7 +31,11 @@ int prlc_error (const char * const s);
 
 #pragma mark - parse functions and data structures
 
-int prlcParsePath(const char *  const,
+int prlcParseFile(FILE *,
+  prlc_store ** ,
+  prlc_tree_node ** );
+
+int prlcParsePath(const char * const,
   prlc_store ** ,
   prlc_tree_node ** );
 

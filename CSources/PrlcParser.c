@@ -20,13 +20,13 @@ int prlcParsePath(const char * const path, prlc_store** store, prlc_tree_node** 
 
   FILE *file = fopen(path,"r");
 
-  int size = prlc_file_size(file);
-
   if (file == NULL) {
     // file not found
     fprintf(stderr,"prlc_parse_path(%s) file could not be oppened.\n", path);
     return -1;
   }
+
+  int size = prlc_file_size(file);
 
   if (size == 0) {
     // file is empty
@@ -47,6 +47,40 @@ int prlcParsePath(const char * const path, prlc_store** store, prlc_tree_node** 
   int code = prlc_parse ();
 
   fclose(file);
+
+  *store = prlcParsingStore;
+  *root = prlcParsingRoot;
+
+  *root = prlcSetStoreReadOnly(*store);
+
+  prlcParsingStore = NULL;
+  prlcParsingRoot = NULL;
+
+
+  /* leave critical section */
+  pthread_mutex_unlock(&parsemutex);
+
+  return code;
+}
+
+int prlcParseFile(FILE * file, prlc_store** store, prlc_tree_node** root) {
+  if (file == NULL) return -1;
+
+  int size = prlc_file_size(file);
+
+  if (size == 0) return -1;
+
+  /* enter critical section */
+  pthread_mutex_lock(&parsemutex);
+
+  prlc_in = file;
+  prlc_restart(file);
+  prlc_lineno = 1;
+
+  prlcParsingStore = prlcCreateStore(size);
+  prlcParsingRoot = prlcStoreNodeFile (prlcParsingStore,"temfile");
+
+  int code = prlc_parse ();
 
   *store = prlcParsingStore;
   *root = prlcParsingRoot;
