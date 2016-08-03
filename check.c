@@ -16,6 +16,20 @@ void check_parse_file(const char *);
 const char* puz001="PUZ001-1.p";
 int maxCount = 0;
 
+void check_parse_string(const char * const string, PRLC_TREE_NODE_TYPE type) {
+
+	prlc_store* store = NULL;
+	prlc_tree_node* root = NULL;
+
+	prlcParseString (string, &store, &root, type);
+
+	printf("parseString(%s, %d)\n",string,type);
+	// print_store_infos (store);
+	print_store_symbols (store, root);
+
+	prlcDestroyStore(store);
+}
+
 int main(int argc, char *argv[])
 {
 	if (argc > 2) {
@@ -29,6 +43,22 @@ int main(int argc, char *argv[])
 		check_parse_file (puz001);
 
 	}
+
+	check_parse_string("X", PRLC_VARIABLE);
+	check_parse_string("a", PRLC_FUNCTION);
+	check_parse_string("f(X,a)", PRLC_FUNCTION);
+	check_parse_string("p(f(X,a))", PRLC_PREDICATE);
+
+	check_parse_string("a=X", PRLC_EQUATIONAL);
+	check_parse_string("a=X", PRLC_CNF);
+	check_parse_string("a=X|p(f(X,a))", PRLC_CNF);
+	check_parse_string("a=X&p(f(X,a))", PRLC_CNF);
+
+	check_parse_string("'Axioms/PUZ001.ax'", PRLC_INCLUDE);
+	check_parse_string("cnf(hi,axiom,b=Y).", PRLC_FILE);
+
+
+
 
 
 	return (0);
@@ -72,13 +102,15 @@ void print_store_symbols(prlc_store* store, prlc_tree_node* root) {
 }
 
 
+
+
 void check_parse_file(const char *path) {
 	printf("%s\n",path);
 
 	prlc_store* store = NULL;
 	prlc_tree_node* root = NULL;
 
-	prlcParseFile (path, &store, &root);
+	prlcParsePath (path, &store, &root);
 
 	print_store_infos (store);
 	print_store_symbols (store, root);

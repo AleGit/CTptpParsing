@@ -63,14 +63,48 @@ int prlcParsePath(const char * const path, prlc_store** store, prlc_tree_node** 
   return code;
 }
 
-int prlcParseFile(FILE * file, prlc_store** store, prlc_tree_node** root) {
+int prlcParseString(const char * const string, prlc_store** store, prlc_tree_node** root, PRLC_TREE_NODE_TYPE type) {
+  if (strlen(string) == 0) return 1;
+
+  FILE *file = tmpfile();
   if (file == NULL) return -1;
+
+  switch (type) {
+    case PRLC_VARIABLE:
+    case PRLC_FUNCTION:
+    // i.e. a first order term, wrap it in a predicate
+    fprintf(file,"cnf( nameNAME, axiom, wrapperWRAPPER(%s)).", string);
+    break;
+
+    case PRLC_EQUATIONAL:
+    case PRLC_PREDICATE:
+    case PRLC_CNF:
+    //
+    fprintf(file,"cnf( nameNAME, axiom, %s).", string);
+    break;
+
+    case PRLC_QUANTIFIER:
+    case PRLC_CONNECTIVE:
+    case PRLC_FOF:
+    fprintf(file,"fof( nameNAME, axiom, %s).", string);
+    break;
+
+    case PRLC_INCLUDE:
+    fprintf(file,"include(%s).", string); // string :== <file_name><formula_selection>
+    break;
+
+    case PRLC_FILE:
+    fprintf(file,"%s", string);
+    break;
+
+    default:
+    return -1;
+    break;
+  }
+  rewind(file);
 
   int size = prlc_file_size(file);
 
-  if (size == 0) return -1;
-
-  /* enter critical section */
   pthread_mutex_lock(&parsemutex);
 
   prlc_in = file;
@@ -78,9 +112,11 @@ int prlcParseFile(FILE * file, prlc_store** store, prlc_tree_node** root) {
   prlc_lineno = 1;
 
   prlcParsingStore = prlcCreateStore(size);
-  prlcParsingRoot = prlcStoreNodeFile (prlcParsingStore,"temfile");
+  prlcParsingRoot = prlcStoreNodeFile (prlcParsingStore,"TEMPFILE");
 
   int code = prlc_parse ();
+
+  fclose(file);
 
   *store = prlcParsingStore;
   *root = prlcParsingRoot;
@@ -95,4 +131,6 @@ int prlcParseFile(FILE * file, prlc_store** store, prlc_tree_node** root) {
   pthread_mutex_unlock(&parsemutex);
 
   return code;
+
+
 }
