@@ -12,7 +12,7 @@ prlc_tree_node* prlcParsingRoot = NULL;
 
 pthread_mutex_t parsemutex = PTHREAD_MUTEX_INITIALIZER;
 
-int prlcParseFile(const char * const path, prlc_store** store, prlc_tree_node** root) {
+int prlcParsePath(const char * const path, prlc_store** store, prlc_tree_node** root) {
   if (path == NULL) {
     fprintf(stderr,"prlc_parse_path(NULL)\n");
     return -1;
