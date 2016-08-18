@@ -60,13 +60,13 @@ prlc_store* prlcCreateStore(size_t fileSize) {
 	size_t tCapacity = prlc_min(fileSize/3, 1 + maxBytes / sizeof(prlc_tree_node));
 
   prlc_alloc_memory(&(store->symbols), sCapacity, sizeof(char));
-  assert(&store->symbols);
+  assert(store->symbols.memory);
 
   prlc_alloc_memory(&(store->p_nodes), pCapacity, sizeof(prlc_prefix_node));
-  assert(&store->p_nodes);
+  assert(store->p_nodes.memory);
 
   prlc_alloc_memory(&(store->t_nodes), tCapacity, sizeof(prlc_tree_node));
-  assert(&store->t_nodes);
+  assert(store->t_nodes.memory);
 
   prlc_copy_predefined_symbols(store);
 

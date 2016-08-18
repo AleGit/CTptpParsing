@@ -14,14 +14,15 @@ ifeq ($(UNAME_S),Darwin)
 	FLAGS = -dynamiclib
 endif
 
-
+#OPT = ""
+OPT = -Ofast
 
 check: check.c install
-	clang -Ofast -o check$(SONAME) -l$(SONAME) check.c
+	clang $(OPT) -o check$(SONAME) -l$(SONAME) check.c
 	time ./check$(SONAME) PUZ001-1.p 100
 
 install: parser
-	clang -Ofast -o $(SOPATH)/$(SOFILE) $(FLAGS) PrlcParser.tab.c lex.prlc_.c $(SRCDIR)/*.c
+	clang $(OPT) -o $(SOPATH)/$(SOFILE) $(FLAGS) PrlcParser.tab.c lex.prlc_.c $(SRCDIR)/*.c
 	cp CSources/Prlc*.h $(INCLUDES)/
 
 parser: $(SRCDIR)/PrlcParser.y $(SRCDIR)/PrlcLexer.l
