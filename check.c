@@ -11,23 +11,35 @@ void print_store_symbols(prlc_store*, prlc_tree_node*);
 
 void check_memory();
 void check_string_store();
-void check_parse_file(const char *);
+int check_parse_file(const char *);
+int check_parse_string(const char * const, PRLC_TREE_NODE_TYPE);
 
 const char* puz001="PUZ001-1.p";
 int maxCount = 0;
 
-void check_parse_string(const char * const string, PRLC_TREE_NODE_TYPE type) {
+int check_parse_string(const char * const string, PRLC_TREE_NODE_TYPE type) {
 
 	prlc_store* store = NULL;
 	prlc_tree_node* root = NULL;
 
-	prlcParseString (string, &store, &root, type);
+	int result = prlcParseString (string, &store, &root, type);
 
 	printf("parseString(%s, %d)\n",string,type);
 	// print_store_infos (store);
-	print_store_symbols (store, root);
+	// print_store_symbols (store, root);
 
 	prlcDestroyStore(store);
+
+	return result;
+}
+
+void test(int expected, int actual) {
+	if (expected != actual) {
+		printf("🛑 \t(%d, %d)\n", expected, actual);
+	}
+	else {
+		printf("✅ \t(%d)\n", actual);
+	}
 }
 
 int main(int argc, char *argv[])
@@ -37,25 +49,28 @@ int main(int argc, char *argv[])
 	}
 
 	if (argc > 1) {
-		check_parse_file (argv[1]);
+		test(0,check_parse_file (argv[1]));
 	}
 	else {
-		check_parse_file (puz001);
+		test(0, check_parse_file (puz001));
 
 	}
 
-	check_parse_string("X", PRLC_VARIABLE);
-	check_parse_string("a", PRLC_FUNCTION);
-	check_parse_string("f(X,a)", PRLC_FUNCTION);
-	check_parse_string("p(f(X,a))", PRLC_PREDICATE);
+	test(0, check_parse_string("X", PRLC_VARIABLE));
+	test(0, check_parse_string("a", PRLC_FUNCTION));
+	test(0, check_parse_string("f(X,a)", PRLC_FUNCTION));
+	test(0, check_parse_string("p(f(X,a))", PRLC_PREDICATE));
 
-	check_parse_string("a=X", PRLC_EQUATIONAL);
-	check_parse_string("a=X", PRLC_CNF);
-	check_parse_string("a=X|p(f(X,a))", PRLC_CNF);
-	check_parse_string("a=X&p(f(X,a))", PRLC_CNF);
+	test(0, check_parse_string("a=X", PRLC_EQUATIONAL));
+	test(0, check_parse_string("a=X", PRLC_CNF));
+	test(0, check_parse_string("a=X|p(f(X,a))", PRLC_CNF));
+	test(0, check_parse_string("a=X&p(f(X,a))", PRLC_FOF));
 
-	check_parse_string("'Axioms/PUZ001.ax'", PRLC_INCLUDE);
-	check_parse_string("cnf(hi,axiom,b=Y).", PRLC_FILE);
+	test(1, check_parse_string("a=X&p(f(X,a))", PRLC_CNF));
+	test(0, check_parse_string("a=X|p(f(X,a))", PRLC_FOF));
+
+	test(0, check_parse_string("'Axioms/PUZ001.ax'", PRLC_INCLUDE));
+	test(0, check_parse_string("cnf(hi,axiom,b=Y).", PRLC_FILE));
 
 
 
@@ -104,18 +119,20 @@ void print_store_symbols(prlc_store* store, prlc_tree_node* root) {
 
 
 
-void check_parse_file(const char *path) {
+int check_parse_file(const char *path) {
 	printf("%s\n",path);
 
 	prlc_store* store = NULL;
 	prlc_tree_node* root = NULL;
 
-	prlcParsePath (path, &store, &root);
+	int result = prlcParsePath (path, &store, &root);
 
 	print_store_infos (store);
 	print_store_symbols (store, root);
 
 	prlcDestroyStore(store);
+
+	return result;
 
 }
 
