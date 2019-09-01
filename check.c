@@ -47,9 +47,10 @@ int main(int argc, char *argv[])
 	if (argc > 2) {
 		maxCount = atoi(argv[2]);
 	}
+	printf("maxCount = %ld\n", maxCount);
 
 	if (argc > 1) {
-		test(0,check_parse_file (argv[1]));
+		test(0, check_parse_file (argv[1]));
 	}
 	else {
 		test(0, check_parse_file (puz001));
