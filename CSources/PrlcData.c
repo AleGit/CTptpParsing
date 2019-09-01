@@ -383,7 +383,7 @@ int prlc_file_size(FILE *file) {
   return size;
 }
 
-// (unused) print store statistics
+// print store statistics
 void prlc_store_stats(prlc_store *store) {
 
 
@@ -400,9 +400,9 @@ void advance(void **p, long amount) {
   if (*p && amount) *p += amount;
 }
 
-// (unused) realloc memories and adjusts pointers
+// realloc memories and adjusts pointers
 prlc_tree_node* prlcSetStoreReadOnly(prlc_store *store) {
-  // prlc_store_stats(store);
+  prlc_store_stats(store);
 
   long s_diff = 0, p_diff = 0, t_diff = 0;
 
@@ -441,7 +441,7 @@ prlc_tree_node* prlcSetStoreReadOnly(prlc_store *store) {
   }
 
   if (t_diff || s_diff) {
-    //printf("+++ %ld +++ %ld +++\n",t_diff,s_diff);
+    printf("+++ %ld +++ %ld +++\n",t_diff,s_diff);
     int i = 0;
     prlc_tree_node *t_node = store->t_nodes.memory;
     while (i < store->t_nodes.size) {
@@ -455,6 +455,6 @@ prlc_tree_node* prlcSetStoreReadOnly(prlc_store *store) {
     // printf("+++ %s +++\n",((prlc_tree_node*)store->t_nodes.memory)->symbol);
   }
 
-  // prlc_store_stats(store);
+  prlc_store_stats(store);
   return store->t_nodes.memory;
 }
