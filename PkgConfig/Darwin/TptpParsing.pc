@@ -1,0 +1,11 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: Tptp Parsing
+Description: Low Level Parsing of Tptp files
+URL: https://github.com/AleGit/CTptpParsing
+Version: 1.0.0
+Libs: -L${libdir} # -llibTptpParsing
+Cflags: -I${includedir}
