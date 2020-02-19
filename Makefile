@@ -15,8 +15,8 @@ ifeq ($(UNAME_S),Darwin)
 	FLAGS = -dynamiclib
 endif
 
-PCSRC = PkgConfig/$(UNAME_S)/$(SONAME).pc
-PCDST = $(SOPATH)/pkgconfig/$(SONAME).pc
+PCSRC = PkgConfig/$(UNAME_S)/*.pc
+PCDST = $(SOPATH)/pkgconfig
 
 OPT = -Ofast
 
@@ -27,7 +27,7 @@ check: check.c install
 install: parser
 	clang $(OPT) -o $(SOPATH)/$(SOFILE) $(FLAGS) PrlcParser.tab.c lex.prlc_.c $(SRCDIR)/*.c
 	cp CSources/Prlc*.h $(INCLUDES)/
-	cp $(PCSRC) $(PCDST)
+	cp $(PCSRC) $(PCDST)/
 
 parser: $(SRCDIR)/PrlcParser.y $(SRCDIR)/PrlcLexer.l
 	bison -d -p prlc_ $(SRCDIR)/PrlcParser.y
@@ -40,4 +40,6 @@ clean: deinstall
 deinstall:
 	rm -f $(SOPATH)/$(SOFILE)
 	rm -f $(INCLUDES)/Prlc*.h
-	rm -f $(PCDST)
+	rm -f $(PCDST)/TptpParsing.pc
+	rm -f $(PCDST)/Yices.pc
+	rm -f $(PCDST)/Z3API.pc

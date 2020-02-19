@@ -1,0 +1,11 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: Z3 Theorem Prover
+Description: Z3 is a theorem prover from Microsoft Research.
+URL: https://github.com/Z3Prover
+Version: 1.0.0
+Libs: -L${libdir}
+Cflags: -I${includedir}
