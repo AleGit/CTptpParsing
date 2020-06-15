@@ -1,6 +1,5 @@
 SRCDIR = CSources
 SONAME = TptpParsing
-INCLUDES = /usr/local/include
 
 UNAME_S := $(shell uname -s)
 
@@ -8,11 +7,13 @@ ifeq ($(UNAME_S),Linux)
 	SOPATH = /usr/lib
 	SOFILE = lib$(SONAME).so
 	FLAGS = -fPIC -shared
+	INCLUDES = /usr/include
 endif
 ifeq ($(UNAME_S),Darwin)
 	SOPATH = /usr/local/lib
 	SOFILE = lib$(SONAME).dylib
 	FLAGS = -dynamiclib
+	INCLUDES = /usr/local/include
 endif
 
 PCSRC = PkgConfig/$(UNAME_S)/*.pc
