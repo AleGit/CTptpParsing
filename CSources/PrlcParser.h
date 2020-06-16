@@ -29,7 +29,8 @@ int prlc_error (const char * const s);
 int prlcParseString(const char * const,
   prlc_store ** ,
   prlc_tree_node **,
-  PRLC_TREE_NODE_TYPE
+  PRLC_TREE_NODE_TYPE,
+  const char * const
 );
 
 // int prlcParseForm(const char * const,

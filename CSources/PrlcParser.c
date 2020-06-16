@@ -65,15 +65,15 @@ int prlcParsePath(const char * const path, prlc_store** store, prlc_tree_node** 
 
   if (file == NULL) {
     // file not found
-    fprintf(stderr,"prlc_parse_path(%s) file could not be oppened.\n", path);
+    fprintf(stderr,"prlc_parse_path(%s) file could not be opened.\n", path);
     return -1;
   }
 
-  return prlcParseFile(file,store,root,path);
+  return prlcParseFile(file, store, root, path);
 }
 
 /// save a wrapped string into a temporary file and parse it with the tptp parser
-int prlcParseString(const char * const string, prlc_store** store, prlc_tree_node** root, PRLC_TREE_NODE_TYPE type) {
+int prlcParseString(const char * const string, prlc_store** store, prlc_tree_node** root, PRLC_TREE_NODE_TYPE type, const char * const name) {
   if (strlen(string) == 0) return -1;
 
   // create and open unique temporary file that will be deleted when it is closed.
@@ -100,11 +100,11 @@ int prlcParseString(const char * const string, prlc_store** store, prlc_tree_nod
     break;
 
     case PRLC_INCLUDE:
-    fprintf(file,"include(%s).", string); // string :== <file_name><formula_selection>
+    fprintf(file, "include(%s).", string); // string :== <file_name><formula_selection>
     break;
 
     case PRLC_FILE:
-    fprintf(file,"%s", string);
+    fprintf(file, "%s", string);
     break;
 
     default:
@@ -113,5 +113,5 @@ int prlcParseString(const char * const string, prlc_store** store, prlc_tree_nod
   }
   rewind(file);
 
-  return prlcParseFile(file,store,root,"tempTptpFile");
+  return prlcParseFile(file, store, root, name);
 }

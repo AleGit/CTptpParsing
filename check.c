@@ -12,19 +12,19 @@ void print_store_symbols(prlc_store*, prlc_tree_node*);
 void check_memory();
 void check_string_store();
 int check_parse_file(const char *);
-int check_parse_string(const char * const, PRLC_TREE_NODE_TYPE);
+int check_parse_string(const char * const, PRLC_TREE_NODE_TYPE, const char * const);
 
 const char* puz001="PUZ001-1.p";
 int maxCount = 0;
 
-int check_parse_string(const char * const string, PRLC_TREE_NODE_TYPE type) {
+int check_parse_string(const char * const string, PRLC_TREE_NODE_TYPE type, const char * const name) {
 
 	prlc_store* store = NULL;
 	prlc_tree_node* root = NULL;
 
-	int result = prlcParseString (string, &store, &root, type);
+	int result = prlcParseString (string, &store, &root, type, name);
 
-	printf("parseString(%s, %d)\n",string,type);
+	printf("parseString(%s, %d, %s)\n",string, type, name);
 	// print_store_infos (store);
 	// print_store_symbols (store, root);
 
@@ -57,21 +57,21 @@ int main(int argc, char *argv[])
 
 	}
 
-	test(0, check_parse_string("X", PRLC_VARIABLE));
-	test(0, check_parse_string("a", PRLC_FUNCTION));
-	test(0, check_parse_string("f(X,a)", PRLC_FUNCTION));
-	test(0, check_parse_string("p(f(X,a))", PRLC_PREDICATE));
+	test(0, check_parse_string("X", PRLC_VARIABLE, "X:variable"));
+	test(0, check_parse_string("a", PRLC_FUNCTION, "a:function"));
+	test(0, check_parse_string("f(X,a)", PRLC_FUNCTION, "f(X,a):function"));
+	test(0, check_parse_string("p(f(X,a))", PRLC_PREDICATE,"p(f(X,a):predicate"));
 
-	test(0, check_parse_string("a=X", PRLC_EQUATIONAL));
-	test(0, check_parse_string("a=X", PRLC_CNF));
-	test(0, check_parse_string("a=X|p(f(X,a))", PRLC_CNF));
-	test(0, check_parse_string("a=X&p(f(X,a))", PRLC_FOF));
+	test(0, check_parse_string("a=X", PRLC_EQUATIONAL,"a=X:equation"));
+	test(0, check_parse_string("a=X", PRLC_CNF,"a=X:cnf"));
+	test(0, check_parse_string("a=X|p(f(X,a))", PRLC_CNF,"a=X|p(f(X,a)):cnf"));
+	test(0, check_parse_string("a=X&p(f(X,a))", PRLC_FOF,"a=X&p(f(X,a)):fof"));
 
-	test(1, check_parse_string("a=X&p(f(X,a))", PRLC_CNF));
-	test(0, check_parse_string("a=X|p(f(X,a))", PRLC_FOF));
+	test(1, check_parse_string("a=X&p(f(X,a))", PRLC_CNF,"a=X&p(f(X,a)):cnf")); // expected parse error at &
+	test(0, check_parse_string("a=X|p(f(X,a))", PRLC_FOF,"a=X|p(f(X,a)):fof"));
 
-	test(0, check_parse_string("'Axioms/PUZ001.ax'", PRLC_INCLUDE));
-	test(0, check_parse_string("cnf(hi,axiom,b=Y).", PRLC_FILE));
+	test(0, check_parse_string("'Axioms/PUZ001.ax'", PRLC_INCLUDE, "'Axioms/PUZ001.ax':include"));
+	test(0, check_parse_string("cnf(hi,axiom,b=Y).", PRLC_FILE,"cnf(hi,axiom,b=Y).:file"));
 
 
 
