@@ -486,7 +486,7 @@ file_name           :   SINGLE_QUOTED               { $$ = CREATE_STRING($1);}
 int yyerror (const char *s)
 {
     static const char *format = "\n<%5d> s='%s' yytext='%s' yychar='%d' (tptp)\n";
-    printf(format, prlc_lineno, s, prlc_text, yychar);
+    fprintf(stderr, format, prlc_lineno, s, prlc_text, yychar);
     //snprintf(globalStringBuffer, MAX_GLOBAL_STRING_BUFFER_SIZE, format, yylineno, s, yytext, yychar);
     return 0;
 }

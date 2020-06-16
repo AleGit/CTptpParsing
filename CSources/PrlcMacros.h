@@ -36,9 +36,9 @@
 #define CREATE_CNF(name, role, cnf_formula, annotations)       prlcStoreNodeAnnotated(PS, PRLC_CNF, name, role, cnf_formula, annotations) INFO_CNF(name)
 #define CREATE_INCLUDE(fileName, nameList)                     prlcStoreNodeInclude(PS, fileName, nameList) INFO_INCLUDE(fileName)
 
-#define CREATE_DFOF(fof_formula)                      NULL; printf("CREATE_DFOF niy"); assert(false)
-#define CREATE_DCNF(cnf_formula)                      NULL; printf("CREATE_DCNF niy"); assert(false)
-#define CREATE_FOT(term)                          NULL; printf("CREATE_FOT niy"); assert(false)
+#define CREATE_DFOF(fof_formula)                      NULL; fprintf(stderr, "CREATE_DFOF niy"); assert(false)
+#define CREATE_DCNF(cnf_formula)                      NULL; fprintf(stderr, "CREATE_DCNF niy"); assert(false)
+#define CREATE_FOT(term)                              NULL; fprintf(stderr, "CREATE_FOT niy"); assert(false)
 
 #define TPTP_INPUT(input)                               input; prlcNodeAppendChild(PR, input)
 #define TPTP_INPUT_APPEND(sequence, input)              prlcNodeAppendNode(sequence, input)

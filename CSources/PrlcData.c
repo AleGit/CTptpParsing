@@ -346,7 +346,7 @@ void prlcNodeSetChild(prlc_tree_node* parent, prlc_tree_node* child) {
 }
 
 void* prlcLabel(const char* const label) {
-    printf("\t*** %s ***\n",label);
+    // printf("\t*** %s ***\n",label);
     return NULL;
 }
 
@@ -387,12 +387,14 @@ int prlc_file_size(FILE *file) {
 void prlc_store_stats(prlc_store *store) {
 
 
+/*
     if (store->symbols.capacity) printf("symb: %zu/%zu = %zu%% @ %p\n", store->symbols.size, store->symbols.capacity, (5 + store->symbols.size * 1000) / store->symbols.capacity / 10, store->symbols.memory);
     if (store->p_nodes.capacity) printf("prfx: %zu/%zu = %zu%% @ %p\n", store->p_nodes.size, store->p_nodes.capacity, (5 + store->p_nodes.size * 1000) / store->p_nodes.capacity / 10, store->p_nodes.memory);
     if (store->t_nodes.capacity) printf("tree: %zu/%zu = %zu%% @ %p\n", store->t_nodes.size, store->t_nodes.capacity, (5 + store->t_nodes.size * 1000) / store->t_nodes.capacity / 10, store->t_nodes.memory);
+*/
 
     long bytes = store->symbols.capacity * store->symbols.unit + store->p_nodes.capacity * store->p_nodes.unit + store->t_nodes.capacity * store->t_nodes.unit;
-    printf("%ld bytes\n",bytes);
+    // printf("%ld bytes\n",bytes);
 }
 
 // adjust pointer
@@ -427,7 +429,7 @@ prlc_tree_node* prlcSetStoreReadOnly(prlc_store *store) {
     s_diff = new_symbols - old_symbols;
   }
   else {
-    fprintf(stderr,"ERROR: store->symbols resizing failed.");
+    fprintf(stderr, "ERROR: store->symbols resizing failed.");
   }
 
   /* relocate syntax tree */
@@ -441,7 +443,7 @@ prlc_tree_node* prlcSetStoreReadOnly(prlc_store *store) {
   }
 
   if (t_diff || s_diff) {
-    printf("+++ %ld +++ %ld +++\n",t_diff,s_diff);
+    // printf("+++ %ld +++ %ld +++\n",t_diff,s_diff);
     int i = 0;
     prlc_tree_node *t_node = store->t_nodes.memory;
     while (i < store->t_nodes.size) {
