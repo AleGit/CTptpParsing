@@ -24,10 +24,7 @@ int check_parse_string(const char * const string, PRLC_TREE_NODE_TYPE type, cons
 
 	int result = prlcParseString (string, &store, &root, type, name);
 
-	printf("parseString(%s, %d, %s)\n",string, type, name);
-	// print_store_infos (store);
-	// print_store_symbols (store, root);
-
+	printf("check_parse_string(\"%s\", %d, \"%s\")\n",string, type, name);
 	prlcDestroyStore(store);
 
 	return result;

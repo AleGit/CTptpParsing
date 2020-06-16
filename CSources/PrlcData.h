@@ -87,7 +87,7 @@ const char * const prlcGetSymbol(prlc_store *, const char * const symbol);
 /// Returns first stored symbol or NULL if no symbol is stored.
 const char * const prlcFirstSymbol(prlc_store *);
 
-/// Returns next sequentially stored symbol or NULL if there is no next sstored symbol.
+/// Returns next sequentially stored symbol or NULL if there is no next stored symbol.
 const char * const prlcNextSymbol(prlc_store *, const char * const symbol);
 
 /// Store probelm or axiom file 'name' in tree, usually as first node, i.e. as root node.

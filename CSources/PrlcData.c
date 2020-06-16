@@ -386,12 +386,14 @@ int prlc_file_size(FILE *file) {
 // print store statistics
 void prlc_store_stats(prlc_store *store) {
 
+    /*
     if (store->symbols.capacity) printf("symb: %zu/%zu = %zu%% @ %p\n", store->symbols.size, store->symbols.capacity, (5 + store->symbols.size * 1000) / store->symbols.capacity / 10, store->symbols.memory);
     if (store->p_nodes.capacity) printf("prfx: %zu/%zu = %zu%% @ %p\n", store->p_nodes.size, store->p_nodes.capacity, (5 + store->p_nodes.size * 1000) / store->p_nodes.capacity / 10, store->p_nodes.memory);
     if (store->t_nodes.capacity) printf("tree: %zu/%zu = %zu%% @ %p\n", store->t_nodes.size, store->t_nodes.capacity, (5 + store->t_nodes.size * 1000) / store->t_nodes.capacity / 10, store->t_nodes.memory);
 
     long bytes = store->symbols.capacity * store->symbols.unit + store->p_nodes.capacity * store->p_nodes.unit + store->t_nodes.capacity * store->t_nodes.unit;
     printf("%ld bytes\n",bytes);
+    */
 }
 
 // adjust pointer
