@@ -1,5 +1,5 @@
 module CTptpParsing [system] {
-    header "/usr/local/include/PrlcParser.h"
+    header "shim.h"
     link "TptpParsing"
     export *
 }
