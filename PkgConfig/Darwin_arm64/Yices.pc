@@ -1,0 +1,11 @@
+prefix=/opt/homebrew
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: The Yices SMT Solver
+Description: Yices 2 is an SMT solver that decides the satisfiability of formulas.
+URL: https://yices.csl.sri.com
+Version: 2.6.2
+Libs: -L${libdir}
+Cflags: -I${includedir}
