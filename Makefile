@@ -5,12 +5,12 @@ UNAME_S := $(shell uname -s)
 UNAME_M := $(shell uname -m)
 
 ifeq ($(UNAME_S),Linux)
-	SOPATH = /usr/lib
+	SOPATH = /usr/local/lib
 	SOFILE = lib$(SONAME).so
 	FLAGS = -fPIC -shared
-	INCLUDES = /usr/include
+	INCLUDES = /usr/local/include
 	PCSRC = PkgConfig/$(UNAME_S)/*.pc
-	PCDST = $(SOPATH)/pkgconfig
+	PCDST = /usr/lib/pkgconfig
 endif
 ifeq ($(UNAME_S),Darwin)
 	SOPATH = /usr/local/lib
