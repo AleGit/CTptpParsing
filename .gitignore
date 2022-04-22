@@ -42,3 +42,5 @@ checkTptpParsing
 # PrlcParser.tab.h
 
 manifest.db
+.build/workspace-state.json
+.DS_Store
