@@ -39,21 +39,7 @@ void test(int expected, int actual) {
 	}
 }
 
-int main(int argc, char *argv[])
-{
-	if (argc > 2) {
-		maxCount = atoi(argv[2]);
-	}
-	printf("maxCount = %d\n", maxCount);
-
-	if (argc > 1) {
-		test(0, check_parse_file (argv[1]));
-	}
-	else {
-		test(0, check_parse_file (puz001));
-
-	}
-
+int main(int argc, char *argv[]) {
 	test(0, check_parse_string("X", PRLC_VARIABLE, "X:variable"));
 	test(0, check_parse_string("a", PRLC_FUNCTION, "a:function"));
 	test(0, check_parse_string("f(X,a)", PRLC_FUNCTION, "f(X,a):function"));
@@ -70,9 +56,11 @@ int main(int argc, char *argv[])
 	test(0, check_parse_string("'Axioms/PUZ001.ax'", PRLC_INCLUDE, "'Axioms/PUZ001.ax':include"));
 	test(0, check_parse_string("cnf(hi,axiom,b=Y).", PRLC_FILE,"cnf(hi,axiom,b=Y).:file"));
 
+	if (argc > 2) { maxCount = atoi(argv[2]); }
+	else { maxCount = 10; }
 
-
-
+	if (argc > 1) { test(0, check_parse_file (argv[1])); }
+	else { test(0, check_parse_file (puz001)); }
 
 	return (0);
 }
@@ -111,11 +99,8 @@ void print_store_symbols(prlc_store* store, prlc_tree_node* root) {
 		count += 1;
 	}
 
-	printf("¤\n");
+	printf("¤ %d (%d)\n", count, maxCount);
 }
-
-
-
 
 int check_parse_file(const char *path) {
 	printf("%s\n",path);
@@ -131,7 +116,6 @@ int check_parse_file(const char *path) {
 	prlcDestroyStore(store);
 
 	return result;
-
 }
 
 void check_string_store() {
