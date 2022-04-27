@@ -10,7 +10,7 @@ void print_store_infos(prlc_store*);
 void print_store_symbols(prlc_store*, prlc_tree_node*);
 
 void check_memory();
-void check_string_store();
+int check_string_store();
 int check_parse_file(const char *);
 int check_parse_string(const char * const, PRLC_TREE_NODE_TYPE, const char * const);
 
@@ -55,6 +55,7 @@ int main(int argc, char *argv[]) {
 
 	test(0, check_parse_string("'Axioms/PUZ001.ax'", PRLC_INCLUDE, "'Axioms/PUZ001.ax':include"));
 	test(0, check_parse_string("cnf(hi,axiom,b=Y).", PRLC_FILE,"cnf(hi,axiom,b=Y).:file"));
+	test(0, check_string_store());
 
 	if (argc > 2) { maxCount = atoi(argv[2]); }
 	else { maxCount = 10; }
@@ -103,24 +104,28 @@ void print_store_symbols(prlc_store* store, prlc_tree_node* root) {
 }
 
 int check_parse_file(const char *path) {
-	printf("%s\n",path);
 
 	prlc_store* store = NULL;
 	prlc_tree_node* root = NULL;
 
 	int result = prlcParsePath (path, &store, &root);
 
-	print_store_infos (store);
+
+	printf("%s\n",path);
 	print_store_symbols (store, root);
 
+	printf("%s\n",path);
+	print_store_infos (store);
+
+	printf("%s\n",path);
 	prlcDestroyStore(store);
 
 	return result;
 }
 
-void check_string_store() {
+int check_string_store() {
 	printf("*** check_string_store ***\n");
-	prlc_store* store = prlcCreateStore(95000);
+	prlc_store* store = prlcCreateStore(0);
 
 	const char* a = "Agatha";
 	const char* b = "Butler";
@@ -135,16 +140,31 @@ void check_string_store() {
 	const char* c0 = prlcStoreSymbol(store, "Charles");
 
 	const char* name = prlcFirstSymbol (store);
-	while (name != NULL) {
-		printf("%s ", name);
-		name = prlcNextSymbol (store,name);
-	}
 
-	printf("\n");
+	int len = 0;
+	int chars = 0;
+	int bytes = 0;
+	int symbs = 0;
+	while (name != NULL) {
+		len = strlen(name);
+		chars += len;
+		bytes += len + 1;
+		symbs += 1;
+		printf("»%s« ", name);
+		name = prlcNextSymbol(store,name);
+	}
+	printf("\n%d bytes = %d chars + %d nulls (%d)\n", bytes, chars, symbs, chars + symbs);
+
+	printf("* print_store_infos\n");
+	print_store_infos(store);
+	printf("* prlcSetStoreReadOnly\n");
+	prlcSetStoreReadOnly(store);
+	printf("* print_store_infos\n");
 	print_store_infos(store);
 
 	prlcDestroyStore(store);
 	printf("=== check_string_store ===\n");
+	return 0;
 }
 
 /* helpers */
