@@ -448,7 +448,7 @@ general_data        :   atomic_word                 { $$=CREATE_Constant($1); }
 general_function    :   atomic_word '(' general_terms ')' { $$=CREATE_Functional($1, $3); }
 formula_data        :   DOLLAR_FOF '(' fof_formula ')' { $$=CREATE_DFOF($3); }
                     |   DOLLAR_CNF '(' cnf_formula ')' { $$=CREATE_DCNF($3); }
-                    |   DOLLAR_FOT '(' term ')'        { $$=CREATE_FOT($3); }
+                    |   DOLLAR_FOT '(' term ')'        { $$=CREATE_DFOT($3); }
 general_list        :   '[' ']' { $$=NULLREF; }
                     |   '[' general_terms ']' {$$=NULLREF;}
 general_terms       :   general_term

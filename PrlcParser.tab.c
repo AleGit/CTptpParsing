@@ -2137,7 +2137,7 @@ yyreduce:
 
   case 115:
 #line 451 "CSources/PrlcParser.y"
-    { (yyval.node)=CREATE_FOT((yyvsp[(3) - (4)].node)); ;}
+    { (yyval.node)=CREATE_DFOT((yyvsp[(3) - (4)].node)); ;}
     break;
 
   case 116:
