@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
 	test(0, check_string_store());
 
 	if (argc > 2) { maxCount = atoi(argv[2]); }
-	else { maxCount = 10; }
+	else { maxCount = 17; }
 
 	if (argc > 1) { test(0, check_parse_file (argv[1])); }
 	else { test(0, check_parse_file (puz001)); }
@@ -104,22 +104,18 @@ void print_store_symbols(prlc_store* store, prlc_tree_node* root) {
 }
 
 int check_parse_file(const char *path) {
+	printf("*** check_parse_file ***\n");
 
 	prlc_store* store = NULL;
 	prlc_tree_node* root = NULL;
 
 	int result = prlcParsePath (path, &store, &root);
 
-
-	printf("%s\n",path);
 	print_store_symbols (store, root);
-
-	printf("%s\n",path);
 	print_store_infos (store);
-
-	printf("%s\n",path);
 	prlcDestroyStore(store);
 
+	printf("=== check_parse_file ===\n");
 	return result;
 }
 
