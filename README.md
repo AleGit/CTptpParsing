@@ -18,3 +18,11 @@ The tptp parsing library can be build and installed with `sudo make install`.
 /usr/lib/lib/libTtptpParsing.so         # linux
 /usr/local/lib/libTptpParinsg.dylib     # macOS
 ```
+
+## Usage
+
+```
+import CTptpParsing
+```
+
+See [FLEA-CNF](https://github.com/AleGit/FLEA-CNF) for usage.
