@@ -1,7 +1,5 @@
-prefix=/usr/local
-exec_prefix=${prefix}
-libdir=${exec_prefix}/lib
-includedir=${prefix}/include
+libdir=/usr/lib/x86_64-linux-gnu/
+includedir=/usr/include/
 
 Name: The Yices SMT Solver
 Description: Yices 2 is an SMT solver that decides the satisfiability of formulas.

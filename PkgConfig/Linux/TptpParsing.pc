@@ -1,7 +1,5 @@
-prefix=/usr/local
-exec_prefix=${prefix}
-libdir=${exec_prefix}/lib
-includedir=${prefix}/include
+libdir=/usr/local/lib/
+includedir=/usr/local/include/
 
 Name: Tptp Parsing 
 Description: low level parsing library for TPTP
