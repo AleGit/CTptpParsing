@@ -9,7 +9,7 @@
 #pragma mark - PrlcLexer.l
 
 extern int prlc_lineno;
-extern unsigned long prlc_leng;
+extern int prlc_leng;
 
 extern char * prlc_text;
 extern FILE * prlc_in;

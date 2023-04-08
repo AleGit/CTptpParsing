@@ -39,8 +39,13 @@ install: parser
 	mkdir -p $(INCLUDES)
 	mkdir -p $(PCDST)
 	clang $(OPT) -o $(SOPATH)/$(SOFILE) $(FLAGS) PrlcParser.tab.c lex.prlc_.c $(SRCDIR)/*.c
+	
 	cp CSources/Prlc*.h $(INCLUDES)/
 	cp $(PCSRC) $(PCDST)/
+	
+	pkg-config TptpParsing --cflags --libs
+	pkg-config Yices --cflags --libs
+	pkg-config Z3Api --cflags --libs
 
 parser: $(SRCDIR)/PrlcParser.y $(SRCDIR)/PrlcLexer.l
 	bison -d -p prlc_ $(SRCDIR)/PrlcParser.y
