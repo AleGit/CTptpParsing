@@ -2,7 +2,6 @@
 //  Copyright © 2016 Alexander Maringele. All rights reserved.
 
 
-#import <sys/sysctl.h>
 #import <pthread.h>
 #import "PrlcParser.h"
 #import "PrlcData.h"
